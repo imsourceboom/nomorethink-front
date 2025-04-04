@@ -25,7 +25,7 @@ export default function Home() {
     const handleConnectWallet = () => {
         // 실제 연결 로직 구현 필요
         setIsWalletConnected(true);
-        setWalletAddress('0x1234567890abcdef1234567890abcdef12345678'); // 예시 주소
+        setWalletAddress('0x1234567890abcdef1234567890abcdef1235678'); // 예시 주소
         setBalance(2.5); // 예시 잔고
     };
 
