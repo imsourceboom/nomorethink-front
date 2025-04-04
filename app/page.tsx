@@ -5,28 +5,26 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [isWalletConnected, setIsWalletConnected] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
-    const [balance, setBalance] = useState(0);
-
-    // 텔레그램 WebApp 초기화
-    useEffect(() => {
-        if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.ready();
-            window.Telegram.WebApp.expand(); // 전체화면
-        }
-    }, []);
 
     // 로딩 화면 2초 후 종료
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);
+
+        // 텔레그램 WebApp 초기화 후 풀스크린으로 확장
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand(); // 풀스크린으로 확장
+        }
     }, []);
 
-    const handleConnectWallet = () => {
-        // 실제 연결 로직 구현 필요
+    const connectWallet = () => {
+        // 톤 지갑 연결을 위한 URL 스킴을 호출
+        const walletLink = 'ton://wallet?address=YOUR_WALLET_ADDRESS';
+        window.open(walletLink, '_blank'); // 톤 지갑 열기
+        setWalletAddress('YOUR_WALLET_ADDRESS'); // 예시 주소
         setIsWalletConnected(true);
-        setWalletAddress('0x1234567890abcdef1234567890abcdef1235678'); // 예시 주소
-        setBalance(2.5); // 예시 잔고
     };
 
     if (isLoading) {
@@ -54,11 +52,10 @@ export default function Home() {
                     {isWalletConnected ? (
                         <div className="text-sm">
                             <p className="font-semibold">{walletAddress}</p>
-                            <p>Balance: {balance} TON</p>
                         </div>
                     ) : (
                         <button
-                            onClick={handleConnectWallet}
+                            onClick={connectWallet}
                             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                         >
                             지갑 연결하기
