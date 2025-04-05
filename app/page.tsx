@@ -7,6 +7,7 @@ declare global {
         Telegram: {
             WebApp: {
                 ready: () => void;
+                expand: () => void;
                 requestFullscreen: () => void;
             };
         };
@@ -23,6 +24,7 @@ export default function Home() {
 
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
             window.Telegram.WebApp.ready(); // WebApp 초기화
+            window.Telegram.WebApp.expand(); // WebApp 초기화
             window.Telegram.WebApp.requestFullscreen(); // 풀스크린 요청
         }
     }, []);
