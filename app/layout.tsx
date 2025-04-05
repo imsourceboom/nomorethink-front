@@ -1,6 +1,5 @@
 'use client'; // 클라이언트 전용 컴포넌트로 설정
 
-import { useEffect, useState } from 'react'; // useEffect, useState import
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
