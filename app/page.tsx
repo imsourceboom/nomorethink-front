@@ -1,24 +1,32 @@
 'use client';
 import { useState, useEffect } from 'react';
-import WebApp from '@twa-dev/sdk';
 
 export default function Home() {
     const [isWalletConnected, setIsWalletConnected] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
+    const [isClient, setIsClient] = useState(false); // 클라이언트 상태 확인
 
     useEffect(() => {
-        if (WebApp) {
-            WebApp.ready();
-            WebApp.requestFullscreen(); // 풀스크린으로 확장
+        setIsClient(true); // Ensure client-side rendering
+
+        if (typeof window !== 'undefined') {
+            (window as any).Telegram?.WebApp?.ready();
+            (window as any).Telegram?.WebApp?.requestFullscreen();
         }
     }, []);
 
     const connectWallet = () => {
         const walletLink = 'ton://wallet?address=YOUR_WALLET_ADDRESS';
-        window.open(walletLink, '_blank');
+        if (typeof window !== 'undefined') {
+            window.open(walletLink, '_blank');
+        }
         setWalletAddress('YOUR_WALLET_ADDRESS'); // 예시 주소
         setIsWalletConnected(true);
     };
+
+    if (!isClient) {
+        return null; // 클라이언트 렌더링 전에 아무것도 렌더링하지 않도록
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-black text-black dark:text-white flex flex-col items-center justify-center p-6">
