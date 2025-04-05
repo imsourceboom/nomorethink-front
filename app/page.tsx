@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image'; // Image 컴포넌트 추가
 import { useState, useEffect } from 'react';
 
 export default function Home() {
@@ -9,9 +10,9 @@ export default function Home() {
     useEffect(() => {
         setIsClient(true); // Ensure client-side rendering
 
-        if (typeof window !== 'undefined') {
-            (window as any).Telegram?.WebApp?.ready();
-            (window as any).Telegram?.WebApp?.requestFullscreen();
+        if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp) {
+            (window as any).Telegram.WebApp.ready(); // WebApp 초기화
+            (window as any).Telegram.WebApp.requestFullscreen(); // 풀스크린 요청
         }
     }, []);
 
@@ -33,10 +34,12 @@ export default function Home() {
             {/* 상단 영역 */}
             <div className="flex items-center space-x-4 mb-6">
                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-                    <img
+                    <Image
                         src="https://via.placeholder.com/150" // 텔레그램 프로필 이미지로 교체
                         alt="Profile"
-                        className="w-full h-full rounded-full"
+                        width={150} // width와 height 속성 추가
+                        height={150}
+                        className="rounded-full"
                     />
                 </div>
                 <div>
@@ -49,7 +52,7 @@ export default function Home() {
                             onClick={connectWallet}
                             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                         >
-                            지갑 연결하기
+                            Wallet 연결
                         </button>
                     )}
                 </div>
