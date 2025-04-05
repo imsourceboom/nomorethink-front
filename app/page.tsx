@@ -2,18 +2,6 @@
 import Image from 'next/image'; // Image 컴포넌트 추가
 import { useState, useEffect } from 'react';
 
-declare global {
-    interface Window {
-        Telegram: {
-            WebApp: {
-                ready: () => void;
-                expand: () => void;
-                requestFullscreen: () => void;
-            };
-        };
-    }
-}
-
 export default function Home() {
     const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
     const [walletAddress, setWalletAddress] = useState<string>('');
@@ -22,11 +10,11 @@ export default function Home() {
     useEffect(() => {
         setIsClient(true); // Ensure client-side rendering
 
-        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-            // window.Telegram.WebApp.ready(); // WebApp 초기화
-            window.Telegram.WebApp.expand(); // WebApp 초기화
-            window.Telegram.WebApp.requestFullscreen(); // 풀스크린 요청
-        }
+        // if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+        window.Telegram.WebApp.ready(); // WebApp 초기화
+        window.Telegram.WebApp.expand(); // WebApp 초기화
+        window.Telegram.WebApp.requestFullscreen(); // 풀스크린 요청
+        // }
     }, []);
 
     const connectWallet = () => {
