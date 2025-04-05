@@ -23,7 +23,7 @@ export default function Home() {
         setIsClient(true); // Ensure client-side rendering
 
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-            window.Telegram.WebApp.ready(); // WebApp 초기화
+            // window.Telegram.WebApp.ready(); // WebApp 초기화
             window.Telegram.WebApp.expand(); // WebApp 초기화
             window.Telegram.WebApp.requestFullscreen(); // 풀스크린 요청
         }
