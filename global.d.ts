@@ -1,3 +1,6 @@
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+
 // global.d.ts
 interface TelegramWebApp {
     ready: () => void;
@@ -15,7 +18,7 @@ interface TelegramWebApp {
 declare global {
     interface Window {
         Telegram?: {
-            WebApp?: TelegramWebApp;
+            WebApp: TelegramWebApp;
         };
     }
 }
