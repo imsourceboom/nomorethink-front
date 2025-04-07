@@ -1,16 +1,32 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback } from 'react';
 
 // Telegram WebApp SDK를 위한 커스텀 훅
 export const useTelegram = () => {
-  const [webApp, setWebApp] = useState<TelegramWebApp | null>(null);
-
-  useEffect(() => {
+  const initTelegram = useCallback(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      setWebApp(window.Telegram.WebApp);
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
     }
   }, []);
 
-  return webApp;
+  const handleMainButtonClick = useCallback(() => {
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      const tg = window.Telegram.WebApp;
+      tg.MainButton.onClick(() => {
+        console.log('Telegram MainButton clicked');
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    initTelegram();
+  }, [initTelegram]);
+
+  return {
+    initTelegram,
+    handleMainButtonClick
+  };
 }; 
