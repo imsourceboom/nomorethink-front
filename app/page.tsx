@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import CoinSection from './components/CoinSection';
 import TotalAmount from './components/TotalAmount';
+import FloatingMenu from './components/FloatingMenu';
 import { useWallet } from './hooks/useWallet';
 import { useTelegram } from './hooks/useTelegram';
 import { DEFAULT_COINS } from './constants/coins';
@@ -49,6 +50,11 @@ export default function Home() {
     // 총 코인 수량 계산
     const totalAmount = DEFAULT_COINS.reduce((acc, coin) => acc + coin.amount, 0);
 
+    const handleMenuClick = () => {
+        // 메뉴 클릭 시 실행할 로직
+        console.log('메뉴 클릭됨');
+    };
+
     return (
         <ErrorBoundary>
             <TelegramWrapper
@@ -84,6 +90,7 @@ export default function Home() {
                         ))}
                     </div>
                 </main>
+                <FloatingMenu onMenuClick={handleMenuClick} />
             </TelegramWrapper>
         </ErrorBoundary>
     );
