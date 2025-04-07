@@ -9,7 +9,7 @@ import FloatingMenu from './components/FloatingMenu';
 import { useWallet } from './hooks/useWallet';
 import { useTelegram } from './hooks/useTelegram';
 import { DEFAULT_COINS } from './constants/coins';
-import { CoinSection as CoinSectionType } from './types/wallet';
+import { CoinSection as CoinSectionType, CoinInfo } from './types/wallet';
 import ErrorBoundary from './components/ErrorBoundary';
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
         },
         {
             title: '현재 가치',
-            coins: DEFAULT_COINS.map(coin => ({
+            coins: DEFAULT_COINS.map((coin: CoinInfo) => ({
                 ...coin,
                 amount: coin.value
             }))
@@ -41,14 +41,14 @@ export default function Home() {
     // 테스트 섹션 데이터 생성
     const testSections: CoinSectionType[] = Array.from({ length: 3 }, (_, i) => ({
         title: `테스트 섹션 ${i + 1}`,
-        coins: DEFAULT_COINS.map(coin => ({
+        coins: DEFAULT_COINS.map((coin: CoinInfo) => ({
             ...coin,
             amount: coin.amount * (i + 1)
         }))
     }));
 
     // 총 코인 수량 계산
-    const totalAmount = DEFAULT_COINS.reduce((acc, coin) => acc + coin.amount, 0);
+    const totalAmount = DEFAULT_COINS.reduce((acc: number, coin: CoinInfo) => acc + coin.amount, 0);
 
     const handleMenuClick = () => {
         // 메뉴 클릭 시 실행할 로직
