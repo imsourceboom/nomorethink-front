@@ -1,16 +1,16 @@
 'use client';
 
-import TelegramWrapper from './components/TelegramWrapper';
-import Header from './components/Header';
-import Dashboard from './components/Dashboard';
-import CoinSection from './components/CoinSection';
-import TotalAmount from './components/TotalAmount';
-import FloatingMenu from './components/FloatingMenu';
-import { useWallet } from './hooks/useWallet';
-import { useTelegram } from './hooks/useTelegram';
-import { DEFAULT_COINS } from './constants/coins';
-import { CoinSection as CoinSectionType, CoinInfo } from './types/wallet';
-import ErrorBoundary from './components/ErrorBoundary';
+import TelegramWrapper from '@/app/components/TelegramWrapper';
+import Header from '@/app/components/Header';
+import Dashboard from '@/app/components/Dashboard';
+import CoinSection from '@/app/components/CoinSection';
+import TotalAmount from '@/app/components/TotalAmount';
+import FloatingMenu from '@/app/components/FloatingMenu';
+import { useWallet } from '@/app/hooks/useWallet';
+import { useTelegram } from '@/app/hooks/useTelegram';
+import { DEFAULT_COINS } from '@/app/constants/coins';
+import { CoinSection as CoinSectionType, CoinInfo } from '@/app/types/wallet';
+import ErrorBoundary from '@/app/components/ErrorBoundary';
 
 export default function Home() {
     const { 

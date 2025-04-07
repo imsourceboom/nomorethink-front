@@ -16,15 +16,8 @@ interface TelegramWebApp {
     offEvent: (eventType: string, callback: () => void) => void;
 }
 
-// Window 인터페이스 확장
-declare global {
-    interface Window {
-        Telegram?: {
-            WebApp?: TelegramWebApp;
-        };
-    }
-}
-
+// Window 인터페이스 확장 - global.d.ts 파일과 충돌하지 않도록 수정
+// 기존 Window 인터페이스에 Telegram 속성이 있는지 확인 후 추가
 export function useTelegram() {
     const initTelegram = useCallback(() => {
         try {
@@ -53,7 +46,6 @@ export function useTelegram() {
     }, []);
 
     useEffect(() => {
-        // Script 로드
         const script = document.createElement('script');
         script.src = 'https://telegram.org/js/telegram-web-app.js';
         script.async = true;
