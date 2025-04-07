@@ -5,8 +5,7 @@ export interface WalletState {
 }
 
 // 코인 정보 타입
-export interface Coin {
-    id: string;
+export interface CoinInfo {
     name: string;
     symbol: string;
     amount: number;
@@ -16,7 +15,7 @@ export interface Coin {
 // 섹션 데이터 타입
 export interface CoinSection {
     title: string;
-    coins: Coin[];
+    coins: CoinInfo[];
 }
 
 // MetaMask 요청 파라미터 타입
