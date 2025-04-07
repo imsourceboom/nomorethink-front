@@ -19,13 +19,22 @@ export interface CoinSection {
     coins: Coin[];
 }
 
+// MetaMask 요청 파라미터 타입
+interface RequestArguments {
+    method: string;
+    params?: unknown[];
+}
+
+// MetaMask 이벤트 파라미터 타입
+type EthereumEventCallback = (params: unknown) => void;
+
 // MetaMask 타입 정의
 declare global {
     interface Window {
         ethereum?: {
-            request: (args: { method: string; params?: any[] }) => Promise<any>;
-            on: (event: string, callback: (params: any) => void) => void;
-            removeListener: (event: string, callback: (params: any) => void) => void;
+            request: (args: RequestArguments) => Promise<unknown>;
+            on: (event: string, callback: EthereumEventCallback) => void;
+            removeListener: (event: string, callback: EthereumEventCallback) => void;
         };
     }
 } 
