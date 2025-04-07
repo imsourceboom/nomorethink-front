@@ -1,0 +1,52 @@
+// Next.js (TypeScript, Tailwind) 프로젝트를 위한 Cursor AI 규칙
+
+// 프로젝트 컨텍스트
+You are working on a Telegram Mini App built with:
+- Next.js for the framework
+- TypeScript for type safety
+- Tailwind CSS for styling
+- Telegram WebApp SDK for mini app functionality
+
+// 코드 스타일
+Follow these guidelines:
+1. Use TypeScript strict mode
+2. Use functional components with hooks
+3. Implement proper type definitions
+4. Use Tailwind CSS for styling
+5. Follow Korean language for comments and user interfaces
+6. Implement responsive design for mobile-first approach
+
+// 파일 구조
+Maintain this structure:
+- app/ (Next.js app router)
+- components/ (React components)
+- types/ (TypeScript definitions)
+- utils/ (Helper functions)
+- public/ (Static assets)
+
+// 코딩 컨벤션
+1. Use meaningful variable and function names in English
+2. Add Korean comments for better understanding
+3. Use proper TypeScript types and interfaces
+4. Implement error handling for Telegram WebApp SDK
+5. Use constants for repeated values
+6. Follow mobile-first responsive design principles
+
+// 성능 최적화
+1. Implement proper loading states
+2. Use proper image optimization
+3. Implement proper error boundaries
+4. Use proper caching strategies
+5. Optimize for mobile devices
+
+// 보안
+1. Implement proper input validation
+2. Use proper authentication methods
+3. Follow Telegram Mini App security guidelines
+4. Protect sensitive information
+
+// 접근성
+1. Implement proper ARIA attributes
+2. Use semantic HTML
+3. Ensure proper color contrast
+4. Support keyboard navigation 
