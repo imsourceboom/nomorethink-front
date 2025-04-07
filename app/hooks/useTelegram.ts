@@ -1,17 +1,56 @@
-import { useCallback } from 'react';
+'use client';
+
+import { useCallback, useEffect } from 'react';
+import Script from 'next/script';
+
+interface TelegramWebApp {
+    ready: () => void;
+    expand: () => void;
+    MainButton: {
+        text: string;
+        show: () => void;
+        hide: () => void;
+        onClick: (callback: () => void) => void;
+    };
+    onEvent: (eventType: string, callback: () => void) => void;
+    offEvent: (eventType: string, callback: () => void) => void;
+}
+
+declare global {
+    interface Window {
+        Telegram?: {
+            WebApp?: TelegramWebApp;
+        };
+    }
+}
 
 export function useTelegram() {
-    const handleMainButtonClick = useCallback(() => {
+    const initTelegram = useCallback(() => {
         try {
-            console.log("메인 버튼이 클릭되었습니다.");
-            // TODO: 메인 버튼 클릭 시 실행할 로직 추가
+            if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+                const tg = window.Telegram.WebApp;
+                tg.ready();
+                tg.expand();
+            }
         } catch (error) {
-            console.error('메인 버튼 처리 중 오류 발생:', error);
-            // TODO: 에러 처리 UI 추가
+            console.warn('Telegram WebApp initialization error:', error);
         }
     }, []);
 
+    useEffect(() => {
+        // Script 로드
+        const script = document.createElement('script');
+        script.src = 'https://telegram.org/js/telegram-web-app.js';
+        script.async = true;
+        script.onload = initTelegram;
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, [initTelegram]);
+
     return {
-        handleMainButtonClick
+        initTelegram
     };
 } 
