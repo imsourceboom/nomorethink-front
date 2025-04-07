@@ -1,24 +1,69 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, useCallback } from 'react';
 import TelegramWrapper from './components/TelegramWrapper';
+import CoinSection from './components/CoinSection';
+import { DEFAULT_COINS } from './constants/coins';
+import { WalletState, CoinSection as CoinSectionType } from './types/wallet';
 
 export default function Home() {
-    const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
-    const [walletAddress, setWalletAddress] = useState<string>('');
+    // 상태 관리
+    const [walletState, setWalletState] = useState<WalletState>({
+        isConnected: false,
+        address: ''
+    });
 
-    const handleMainButtonClick = () => {
-        console.log("메인 버튼이 클릭되었습니다.");
-        // 여기에 메인 버튼 클릭 시 실행할 로직을 추가하세요
-    };
-
-    const connectWallet = () => {
-        const walletLink = 'ton://wallet?address=YOUR_WALLET_ADDRESS';
-        if (typeof window !== 'undefined') {
-            window.open(walletLink, '_blank');
+    // 지갑 연결 핸들러
+    const handleWalletConnect = useCallback(() => {
+        try {
+            const walletLink = 'ton://wallet?address=YOUR_WALLET_ADDRESS';
+            if (typeof window !== 'undefined') {
+                window.open(walletLink, '_blank');
+            }
+            setWalletState({
+                isConnected: true,
+                address: 'YOUR_WALLET_ADDRESS'
+            });
+        } catch (error) {
+            console.error('지갑 연결 중 오류 발생:', error);
+            // TODO: 에러 처리 UI 추가
         }
-        setWalletAddress('YOUR_WALLET_ADDRESS');
-        setIsWalletConnected(true);
-    };
+    }, []);
+
+    // 메인 버튼 클릭 핸들러
+    const handleMainButtonClick = useCallback(() => {
+        try {
+            console.log("메인 버튼이 클릭되었습니다.");
+            // TODO: 메인 버튼 클릭 시 실행할 로직 추가
+        } catch (error) {
+            console.error('메인 버튼 처리 중 오류 발생:', error);
+            // TODO: 에러 처리 UI 추가
+        }
+    }, []);
+
+    // 코인 섹션 데이터
+    const sections: CoinSectionType[] = [
+        {
+            title: '보유 코인',
+            coins: DEFAULT_COINS
+        },
+        {
+            title: '현재 가치',
+            coins: DEFAULT_COINS.map(coin => ({
+                ...coin,
+                amount: coin.value
+            }))
+        }
+    ];
+
+    // 테스트 섹션 데이터 생성
+    const testSections: CoinSectionType[] = Array.from({ length: 3 }, (_, i) => ({
+        title: `테스트 섹션 ${i + 1}`,
+        coins: DEFAULT_COINS.map(coin => ({
+            ...coin,
+            amount: coin.amount * (i + 1)
+        }))
+    }));
 
     return (
         <TelegramWrapper
@@ -31,19 +76,20 @@ export default function Home() {
                     <div className="w-full flex items-center justify-between mb-8 mt-4">
                         <div className="flex items-center space-x-3">
                             <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
-                                <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white text-xl font-bold">
+                                <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white text-xl font-bold" aria-label="NoMoreThink 로고">
                                     NT
                                 </div>
                             </div>
                             <div>
-                                {isWalletConnected ? (
+                                {walletState.isConnected ? (
                                     <div className="text-sm">
-                                        <p className="font-semibold">{walletAddress}</p>
+                                        <p className="font-semibold">{walletState.address}</p>
                                     </div>
                                 ) : (
                                     <button
-                                        onClick={connectWallet}
+                                        onClick={handleWalletConnect}
                                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                        aria-label="지갑 연결하기"
                                     >
                                         Wallet connect
                                     </button>
@@ -53,78 +99,29 @@ export default function Home() {
                     </div>
 
                     {/* 대시보드 영역 */}
-                    <div className="w-full text-center space-y-4">
+                    <div className="w-full text-center space-y-4 mb-8">
                         <h1 className="text-3xl font-bold">🧠 NoMoreThink</h1>
                         <p className="text-lg opacity-90">
                             텔레그램 미니앱 연동 테스트 화면입니다.
                         </p>
                     </div>
 
-                    {/* 보유 코인 섹션 */}
-                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
-                        <h2 className="text-xl font-bold mb-4">보유 코인</h2>
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <span>비트코인</span>
-                                <span>1.25 BTC</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span>이더리움</span>
-                                <span>3.45 ETH</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span>라이트코인</span>
-                                <span>15 LTC</span>
-                            </div>
-                        </div>
-                    </section>
+                    {/* 코인 섹션들 */}
+                    {sections.map((section, index) => (
+                        <CoinSection key={`main-${index}`} section={section} />
+                    ))}
 
                     {/* 총 수량 섹션 */}
-                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
-                        <h2 className="text-xl font-bold mb-4">총 수량</h2>
+                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4" aria-labelledby="total-amount">
+                        <h2 id="total-amount" className="text-xl font-bold mb-4">총 수량</h2>
                         <div className="text-2xl font-bold">
-                            19.2 코인
+                            {DEFAULT_COINS.reduce((acc, coin) => acc + coin.amount, 0).toFixed(2)} 코인
                         </div>
                     </section>
 
-                    {/* 현재 가치 섹션 */}
-                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
-                        <h2 className="text-xl font-bold mb-4">현재 가치</h2>
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <span>비트코인</span>
-                                <span>$45,000</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span>이더리움</span>
-                                <span>$3,200</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span>라이트코인</span>
-                                <span>$200</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* 추가 섹션들 (스크롤 테스트용) */}
-                    {[1, 2, 3].map((i) => (
-                        <section key={i} className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
-                            <h2 className="text-xl font-bold mb-4">테스트 섹션 {i}</h2>
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-center">
-                                    <span>비트코인</span>
-                                    <span>{(1.25 * i).toFixed(2)} BTC</span>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <span>이더리움</span>
-                                    <span>{(3.45 * i).toFixed(2)} ETH</span>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <span>라이트코인</span>
-                                    <span>{15 * i} LTC</span>
-                                </div>
-                            </div>
-                        </section>
+                    {/* 스크롤 테스트용 섹션들 */}
+                    {testSections.map((section, index) => (
+                        <CoinSection key={`test-${index}`} section={section} />
                     ))}
                 </div>
             </main>
