@@ -36,6 +36,20 @@ export function useTelegram() {
         }
     }, []);
 
+    const handleMainButtonClick = useCallback(() => {
+        try {
+            if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+                const tg = window.Telegram.WebApp;
+                tg.MainButton.onClick(() => {
+                    console.log('Telegram MainButton clicked');
+                    // 여기에 메인 버튼 클릭 시 실행할 로직을 추가할 수 있습니다.
+                });
+            }
+        } catch (error) {
+            console.warn('Telegram MainButton click error:', error);
+        }
+    }, []);
+
     useEffect(() => {
         // Script 로드
         const script = document.createElement('script');
@@ -50,6 +64,7 @@ export function useTelegram() {
     }, [initTelegram]);
 
     return {
-        initTelegram
+        initTelegram,
+        handleMainButtonClick
     };
 } 
