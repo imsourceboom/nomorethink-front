@@ -1,7 +1,6 @@
-'use client'; // 클라이언트 전용 컴포넌트로 설정
-
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import { metadata } from './metadata';
+import "./globals.css";
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -13,13 +12,15 @@ const geistMono = Geist_Mono({
     subsets: ['latin'],
 });
 
+export { metadata };
+
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="ko">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
