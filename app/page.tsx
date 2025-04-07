@@ -59,6 +59,73 @@ export default function Home() {
                             텔레그램 미니앱 연동 테스트 화면입니다.
                         </p>
                     </div>
+
+                    {/* 보유 코인 섹션 */}
+                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
+                        <h2 className="text-xl font-bold mb-4">보유 코인</h2>
+                        <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                                <span>비트코인</span>
+                                <span>1.25 BTC</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span>이더리움</span>
+                                <span>3.45 ETH</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span>라이트코인</span>
+                                <span>15 LTC</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 총 수량 섹션 */}
+                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
+                        <h2 className="text-xl font-bold mb-4">총 수량</h2>
+                        <div className="text-2xl font-bold">
+                            19.2 코인
+                        </div>
+                    </section>
+
+                    {/* 현재 가치 섹션 */}
+                    <section className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
+                        <h2 className="text-xl font-bold mb-4">현재 가치</h2>
+                        <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                                <span>비트코인</span>
+                                <span>$45,000</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span>이더리움</span>
+                                <span>$3,200</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span>라이트코인</span>
+                                <span>$200</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 추가 섹션들 (스크롤 테스트용) */}
+                    {[1, 2, 3].map((i) => (
+                        <section key={i} className="w-full max-w-md rounded-2xl bg-slate-800/50 p-6 mb-4">
+                            <h2 className="text-xl font-bold mb-4">테스트 섹션 {i}</h2>
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                    <span>비트코인</span>
+                                    <span>{(1.25 * i).toFixed(2)} BTC</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span>이더리움</span>
+                                    <span>{(3.45 * i).toFixed(2)} ETH</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span>라이트코인</span>
+                                    <span>{15 * i} LTC</span>
+                                </div>
+                            </div>
+                        </section>
+                    ))}
                 </div>
             </main>
         </TelegramWrapper>
