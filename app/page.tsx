@@ -25,10 +25,10 @@ export default function Home() {
             mainButtonText="시작하기"
             onMainButtonClick={handleMainButtonClick}
         >
-            <main className="flex min-h-screen flex-col items-center justify-start p-24">
-                <div className="w-full max-w-md mx-auto flex flex-col items-center justify-start py-6 px-4">
+            <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-14 pb-6">
+                <div className="w-full max-w-md mx-auto flex flex-col items-center justify-start">
                     {/* 상단 영역 */}
-                    <div className="w-full flex items-center justify-between mb-8">
+                    <div className="w-full flex items-center justify-between mb-8 mt-4">
                         <div className="flex items-center space-x-3">
                             <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                                 <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white text-xl font-bold">
