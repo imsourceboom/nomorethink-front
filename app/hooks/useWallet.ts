@@ -8,7 +8,7 @@ interface WalletHookState extends WalletState {
     error: string | null;
 }
 
-export default function useWallet() {
+export function useWallet() {
     const [state, setState] = useState<WalletHookState>({
         isConnected: false,
         address: null,
