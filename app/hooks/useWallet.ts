@@ -24,7 +24,7 @@ export function useWallet() {
             if (typeof window !== 'undefined' && window.ethereum) {
                 const accounts = await window.ethereum.request({ 
                     method: 'eth_requestAccounts' 
-                });
+                }) as string[];
                 
                 if (accounts && accounts[0]) {
                     setState({
