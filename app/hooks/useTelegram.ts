@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import Script from 'next/script';
 
 interface TelegramWebApp {
     ready: () => void;
