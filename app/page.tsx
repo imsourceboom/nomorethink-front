@@ -1,5 +1,5 @@
 'use client';
-import Image from 'next/image'; // Image 컴포넌트 추가
+import Image from 'next/image';
 import { useState } from 'react';
 import TelegramWrapper from './components/TelegramWrapper';
 
@@ -30,14 +30,10 @@ export default function Home() {
                 <div className="min-h-screen bg-gray-100 dark:bg-black text-black dark:text-white flex flex-col items-center justify-center p-6">
                     {/* 상단 영역 */}
                     <div className="flex items-center space-x-4 mb-6">
-                        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-                            <Image
-                                src="https://via.placeholder.com/150" // 텔레그램 프로필 이미지로 교체
-                                alt="Profile"
-                                width={150} // width와 height 속성 추가
-                                height={150}
-                                className="rounded-full"
-                            />
+                        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+                            <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white text-xl font-bold">
+                                NT
+                            </div>
                         </div>
                         <div>
                             {isWalletConnected ? (
