@@ -19,8 +19,39 @@
   }
 }
 
+html,
 body {
+  /* 스크롤 체이닝 방지 코드 */
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* 기본 스타일 */
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* 모바일 최적화 */
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 반응형 패딩 조정 */
+@media (max-width: 640px) {
+  .p-24 {
+    padding: 1rem !important;
+  }
+}
+
+/* 모바일 화면에서 최소 높이 조정 */
+@media (max-width: 640px) {
+  .min-h-screen {
+    min-height: 100vh !important;
+    min-height: -webkit-fill-available !important;
+  }
+}
+
+/* iOS Safari에서 100vh 문제 해결 */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
 }
