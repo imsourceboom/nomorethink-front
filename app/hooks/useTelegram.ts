@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { TelegramWebApp } from '../types/telegram';
 
 // Telegram WebApp SDK를 위한 커스텀 훅
 export const useTelegram = () => {
