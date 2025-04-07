@@ -16,6 +16,7 @@ interface TelegramWebApp {
     offEvent: (eventType: string, callback: () => void) => void;
 }
 
+// Window 인터페이스 확장
 declare global {
     interface Window {
         Telegram?: {

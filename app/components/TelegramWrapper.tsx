@@ -23,7 +23,7 @@ export default function TelegramWrapper({
         // 메인 버튼 설정
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
             const tg = window.Telegram.WebApp;
-            tg.MainButton.setText(mainButtonText);
+            tg.MainButton.text = mainButtonText;
             tg.MainButton.show();
             
             if (onMainButtonClick) {
