@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useCallback } from 'react';
 import { WalletState } from '../types/wallet';
 
@@ -6,10 +8,10 @@ interface WalletHookState extends WalletState {
     error: string | null;
 }
 
-export function useWallet() {
+export default function useWallet() {
     const [state, setState] = useState<WalletHookState>({
         isConnected: false,
-        address: '',
+        address: null,
         isLoading: false,
         error: null
     });
@@ -17,27 +19,30 @@ export function useWallet() {
     const handleWalletConnect = useCallback(async () => {
         try {
             setState(prev => ({ ...prev, isLoading: true, error: null }));
-            
-            const walletLink = 'ton://wallet?address=YOUR_WALLET_ADDRESS';
-            if (typeof window !== 'undefined') {
-                window.open(walletLink, '_blank');
+
+            // MetaMask가 설치되어 있는지 확인
+            if (typeof window !== 'undefined' && window.ethereum) {
+                const accounts = await window.ethereum.request({ 
+                    method: 'eth_requestAccounts' 
+                });
+                
+                if (accounts && accounts[0]) {
+                    setState({
+                        isConnected: true,
+                        address: accounts[0],
+                        isLoading: false,
+                        error: null
+                    });
+                }
+            } else {
+                throw new Error('MetaMask가 설치되어 있지 않습니다.');
             }
-
-            // 실제로는 지갑 연결 응답을 기다려야 합니다
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            setState(prev => ({
-                ...prev,
-                isConnected: true,
-                address: 'YOUR_WALLET_ADDRESS',
-                isLoading: false
-            }));
         } catch (error) {
-            console.error('지갑 연결 중 오류 발생:', error);
+            console.error('지갑 연결 에러:', error);
             setState(prev => ({
                 ...prev,
                 isLoading: false,
-                error: '지갑 연결에 실패했습니다. 다시 시도해주세요.'
+                error: error instanceof Error ? error.message : '지갑 연결에 실패했습니다.'
             }));
         }
     }, []);
