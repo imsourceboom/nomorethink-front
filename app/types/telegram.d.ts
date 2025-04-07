@@ -1,4 +1,4 @@
-export interface TelegramWebApp {
+declare interface TelegramWebApp {
   ready: () => void;
   expand: () => void;
   MainButton: {
@@ -9,4 +9,10 @@ export interface TelegramWebApp {
   };
   onEvent: (eventType: string, callback: () => void) => void;
   offEvent: (eventType: string, callback: () => void) => void;
+}
+
+declare interface Window {
+  Telegram?: {
+    WebApp: TelegramWebApp;
+  };
 } 

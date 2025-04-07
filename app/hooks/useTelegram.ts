@@ -8,10 +8,8 @@ export const useTelegram = () => {
   const [webApp, setWebApp] = useState<TelegramWebApp | null>(null);
 
   useEffect(() => {
-    // @ts-ignore - Telegram WebApp SDK는 window 객체에 자동으로 주입됩니다
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      setWebApp(tg);
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      setWebApp(window.Telegram.WebApp);
     }
   }, []);
 
