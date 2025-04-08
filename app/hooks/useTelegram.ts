@@ -9,6 +9,8 @@ export const useTelegram = () => {
       const tg = window.Telegram.WebApp;
       tg.ready();
       tg.expand();
+      tg.requestFullscreen(); // 전체 화면 모드 활성화
+      tg.disableVerticalSwipes(); // 수직 스와이프 비활성화
     }
   }, []);
 
