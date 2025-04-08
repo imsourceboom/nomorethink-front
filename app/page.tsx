@@ -2,14 +2,9 @@
 
 import TelegramWrapper from '@/app/components/TelegramWrapper';
 import Header from '@/app/components/Header';
-import Dashboard from '@/app/components/Dashboard';
-import CoinSection from '@/app/components/CoinSection';
-import TotalAmount from '@/app/components/TotalAmount';
 import FloatingMenu from '@/app/components/FloatingMenu';
 import { useWallet } from '@/app/hooks/useWallet';
 import { useTelegram } from '@/app/hooks/useTelegram';
-import { DEFAULT_COINS } from '@/app/constants/coins';
-import { CoinSection as CoinSectionType, CoinInfo } from '@/app/types/wallet';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 
 export default function Home() {
@@ -23,32 +18,16 @@ export default function Home() {
     } = useWallet();
     const { handleMainButtonClick } = useTelegram();
 
-    // 코인 섹션 데이터
-    const sections: CoinSectionType[] = [
-        {
-            title: '보유 코인',
-            coins: DEFAULT_COINS
-        },
-        {
-            title: '현재 가치',
-            coins: DEFAULT_COINS.map((coin: CoinInfo) => ({
-                ...coin,
-                amount: coin.value
-            }))
-        }
-    ];
-
-    // 테스트 섹션 데이터 생성
-    const testSections: CoinSectionType[] = Array.from({ length: 3 }, (_, i) => ({
-        title: `테스트 섹션 ${i + 1}`,
-        coins: DEFAULT_COINS.map((coin: CoinInfo) => ({
-            ...coin,
-            amount: coin.amount * (i + 1)
-        }))
-    }));
-
-    // 총 코인 수량 계산
-    const totalAmount = DEFAULT_COINS.reduce((acc: number, coin: CoinInfo) => acc + coin.amount, 0);
+    // TODO: 실제 자산 데이터로 교체
+    const totalAssets = {
+        totalValue: 15000000,
+        change24h: 2.5,
+        assets: [
+            { symbol: 'BTC', amount: 0.5, value: 30000000, change24h: 1.2 },
+            { symbol: 'ETH', amount: 2.0, value: 4000000, change24h: -0.8 },
+            { symbol: 'XRP', amount: 1000, value: 800000, change24h: 3.1 }
+        ]
+    };
 
     const handleMenuClick = () => {
         // 메뉴 클릭 시 실행할 로직
@@ -58,11 +37,11 @@ export default function Home() {
     return (
         <ErrorBoundary>
             <TelegramWrapper
-                mainButtonText="시작하기"
+                mainButtonText="자동 매수 설정"
                 onMainButtonClick={handleMainButtonClick}
             >
                 <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-24 pb-6">
-                    <div className="w-full max-w-md mx-auto flex flex-col items-center justify-start">
+                    <div className="w-full max-w-md mx-auto">
                         <Header 
                             isConnected={isConnected}
                             address={address}
@@ -72,22 +51,38 @@ export default function Home() {
                             resetError={resetError}
                         />
 
-                        <Dashboard 
-                            title="🧠 NoMoreThink"
-                            description="텔레그램 미니앱 연동 테스트 화면입니다."
-                        />
+                        {/* 총 자산 가치 */}
+                        <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
+                            <h2 className="text-lg font-semibold text-gray-600 mb-1">총 자산 가치</h2>
+                            <div className="flex items-baseline">
+                                <span className="text-3xl font-bold">
+                                    ₩{totalAssets.totalValue.toLocaleString()}
+                                </span>
+                                <span className={`ml-2 text-sm ${totalAssets.change24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                    {totalAssets.change24h >= 0 ? '+' : ''}{totalAssets.change24h}%
+                                </span>
+                            </div>
+                        </div>
 
-                        {/* 코인 섹션들 */}
-                        {sections.map((section, index) => (
-                            <CoinSection key={`main-${index}`} section={section} />
-                        ))}
-
-                        <TotalAmount amount={totalAmount} />
-
-                        {/* 스크롤 테스트용 섹션들 */}
-                        {testSections.map((section, index) => (
-                            <CoinSection key={`test-${index}`} section={section} />
-                        ))}
+                        {/* 자산 목록 */}
+                        <div className="space-y-4">
+                            {totalAssets.assets.map((asset) => (
+                                <div key={asset.symbol} className="bg-white p-4 rounded-lg shadow">
+                                    <div className="flex justify-between items-center">
+                                        <div>
+                                            <h3 className="font-semibold">{asset.symbol}</h3>
+                                            <p className="text-sm text-gray-600">{asset.amount} {asset.symbol}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="font-semibold">₩{asset.value.toLocaleString()}</p>
+                                            <p className={`text-sm ${asset.change24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                {asset.change24h >= 0 ? '+' : ''}{asset.change24h}%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </main>
                 <FloatingMenu onMenuClick={handleMenuClick} />
