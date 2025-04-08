@@ -12,9 +12,6 @@ const config: Config = {
         'telegram': '#0088cc',
         'telegram-secondary': '#0099e6',
       },
-      fontFamily: {
-        sans: ['var(--font-roboto)', 'sans-serif'],
-      },
     },
   },
   plugins: [],
