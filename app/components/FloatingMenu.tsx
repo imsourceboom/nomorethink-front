@@ -77,14 +77,11 @@ export default function FloatingMenu() {
                 onClick={handleClick}
                 className="w-12 h-12 bg-[#2481cc] rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
             >
-                <svg 
-                    className={`w-6 h-6 text-white transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`} 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
+                <div className="w-6 h-6 relative flex flex-col justify-center items-center">
+                    <span className={`absolute w-6 h-0.5 bg-white transform transition-transform duration-300 ${isOpen ? 'rotate-45' : '-translate-y-2'}`} />
+                    <span className={`absolute w-6 h-0.5 bg-white transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
+                    <span className={`absolute w-6 h-0.5 bg-white transform transition-transform duration-300 ${isOpen ? '-rotate-45' : 'translate-y-2'}`} />
+                </div>
             </button>
         </div>
     );
