@@ -20,7 +20,7 @@ export default function Home() {
     };
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-24 pb-6 bg-black">
+        <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-32 pb-6 bg-black">
             <div className="w-full max-w-md mx-auto">
                 {/* 총 자산 가치 */}
                 <div className="bg-zinc-900 p-6 rounded-lg shadow-lg mb-6 border border-zinc-800">

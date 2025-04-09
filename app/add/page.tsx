@@ -105,8 +105,8 @@ export default function AddPage() {
                 mainButtonText="설정 완료"
                 onMainButtonClick={handleSubmit}
             >
-                <main className="flex min-h-screen flex-col bg-[#17171B] text-white">
-                    <div className="w-full max-w-md mx-auto px-5 pt-6 pb-20">
+                <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-32 pb-6 bg-black">
+                    <div className="w-full max-w-md mx-auto">
                         <Header 
                             isConnected={isConnected}
                             address={address}
