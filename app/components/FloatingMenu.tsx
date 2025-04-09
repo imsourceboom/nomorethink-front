@@ -3,35 +3,31 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface FloatingMenuProps {
-    onMenuClick: () => void;
-}
-
-export default function FloatingMenu({ onMenuClick }: FloatingMenuProps) {
+export default function FloatingMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
 
     const handleClick = () => {
         setIsOpen(!isOpen);
-        onMenuClick();
     };
 
     const handleNavigation = (path: string) => {
-        setIsOpen(false);
         router.push(path);
+        setIsOpen(false);
     };
 
-    // 서브메뉴 버튼들의 위치를 계산하는 함수 (반원 형태)
-    const calculatePosition = (index: number, total: number, radius: number = 80) => {
-        // 180도(π 라디안)를 버튼 개수로 나누어 각도 계산
-        const angle = (index * (180 / (total - 1)) - 90) * (Math.PI / 180);
-        const x = -radius * Math.cos(angle); // 왼쪽으로 배치하기 위해 x 좌표에 마이너스
-        const y = radius * Math.sin(angle);
-        return { x, y };
+    // 서브메뉴 아이템의 위치 계산
+    const calculatePosition = (index: number, total: number) => {
+        const radius = 80; // 원의 반지름
+        const angle = (Math.PI / (total - 1)) * index;
+        return {
+            x: -radius * Math.cos(angle),
+            y: -radius * Math.sin(angle)
+        };
     };
 
     return (
-        <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50">
+        <div className="fixed right-4 top-[60%] -translate-y-1/2 z-50">
             {/* 서브메뉴 */}
             <div className={`absolute transition-all duration-300 ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'}`}>
                 {/* 홈 버튼 */}
@@ -51,7 +47,7 @@ export default function FloatingMenu({ onMenuClick }: FloatingMenuProps) {
                 {/* 추가 버튼 */}
                 <button 
                     onClick={() => handleNavigation('/add')}
-                    className="absolute w-14 h-14 bg-green-500 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+                    className="absolute w-14 h-14 bg-blue-500 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
                     style={{ 
                         transform: isOpen ? `translate(${calculatePosition(1, 3).x}px, ${calculatePosition(1, 3).y}px)` : 'translate(0, 0)',
                         transition: 'transform 0.3s ease-out'
@@ -65,7 +61,7 @@ export default function FloatingMenu({ onMenuClick }: FloatingMenuProps) {
                 {/* 지갑 버튼 */}
                 <button 
                     onClick={() => handleNavigation('/wallet')}
-                    className="absolute w-14 h-14 bg-purple-500 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+                    className="absolute w-14 h-14 bg-blue-500 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
                     style={{ 
                         transform: isOpen ? `translate(${calculatePosition(2, 3).x}px, ${calculatePosition(2, 3).y}px)` : 'translate(0, 0)',
                         transition: 'transform 0.3s ease-out'
@@ -77,7 +73,7 @@ export default function FloatingMenu({ onMenuClick }: FloatingMenuProps) {
                 </button>
             </div>
 
-            {/* 메인 버튼 */}
+            {/* 메인 토글 버튼 */}
             <button
                 onClick={handleClick}
                 className="w-14 h-14 bg-rose-500 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-rose-600"

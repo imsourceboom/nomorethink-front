@@ -4,7 +4,6 @@ import TelegramWrapper from '@/app/components/TelegramWrapper';
 import Header from '@/app/components/Header';
 import FloatingMenu from '@/app/components/FloatingMenu';
 import { useWallet } from '@/app/hooks/useWallet';
-import { useTelegram } from '@/app/hooks/useTelegram';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
         handleWalletConnect,
         resetError
     } = useWallet();
-    const { handleMainButtonClick } = useTelegram();
 
     // TODO: 실제 자산 데이터로 교체
     const totalAssets = {
@@ -29,17 +27,9 @@ export default function Home() {
         ]
     };
 
-    const handleMenuClick = () => {
-        // 메뉴 클릭 시 실행할 로직
-        console.log('메뉴 클릭됨');
-    };
-
     return (
         <ErrorBoundary>
-            <TelegramWrapper
-                mainButtonText="자동 매수 설정"
-                onMainButtonClick={handleMainButtonClick}
-            >
+            <TelegramWrapper>
                 <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-24 pb-6">
                     <div className="w-full max-w-md mx-auto">
                         <Header 
@@ -85,7 +75,7 @@ export default function Home() {
                         </div>
                     </div>
                 </main>
-                <FloatingMenu onMenuClick={handleMenuClick} />
+                <FloatingMenu />
             </TelegramWrapper>
         </ErrorBoundary>
     );
