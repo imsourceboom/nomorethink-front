@@ -13,7 +13,11 @@ export const useTelegram = () => {
       tg.ready();
       tg.expand();
       tg.requestFullscreen();
-      tg.disableVerticalSwipes();
+      
+      // disableVerticalSwipes가 존재하는 경우에만 호출
+      if (typeof tg.disableVerticalSwipes === 'function') {
+        tg.disableVerticalSwipes();
+      }
 
       // 테마 설정
       if (tg.themeParams) {
