@@ -5,7 +5,6 @@ declare global {
         expand: () => void;
         requestFullscreen: () => void;
         disableVerticalSwipes: () => void;
-        colorScheme: 'light' | 'dark';
         themeParams: {
             bg_color: string;
             text_color: string;
@@ -27,7 +26,7 @@ declare global {
 
     interface Window {
         Telegram?: {
-            WebApp?: TelegramWebApp;
+            WebApp: TelegramWebApp;
         };
         ethereum?: {
             request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
