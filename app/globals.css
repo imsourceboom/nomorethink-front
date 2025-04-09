@@ -35,8 +35,7 @@
 
 html, body {
   /* 스크롤 체이닝 방지 */
-  min-height: 100vh;
-  height: auto;
+  height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
 
