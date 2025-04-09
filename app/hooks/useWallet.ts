@@ -3,9 +3,23 @@
 import { useState, useCallback } from 'react';
 import { WalletState } from '../types/wallet';
 
+interface Asset {
+    symbol: string;
+    amount: number;
+    value: number;
+    change24h: number;
+}
+
+interface TotalAssets {
+    totalValue: number;
+    change24h: number;
+    assets: Asset[];
+}
+
 interface WalletHookState extends WalletState {
     isLoading: boolean;
     error: string | null;
+    totalAssets: TotalAssets;
 }
 
 export function useWallet() {
@@ -13,7 +27,16 @@ export function useWallet() {
         isConnected: false,
         address: null,
         isLoading: false,
-        error: null
+        error: null,
+        totalAssets: {
+            totalValue: 15000000,
+            change24h: 2.5,
+            assets: [
+                { symbol: 'BTC', amount: 0.5, value: 30000000, change24h: 1.2 },
+                { symbol: 'ETH', amount: 2.0, value: 4000000, change24h: -0.8 },
+                { symbol: 'XRP', amount: 1000, value: 800000, change24h: 3.1 }
+            ]
+        }
     });
 
     const handleWalletConnect = useCallback(async () => {
@@ -31,7 +54,16 @@ export function useWallet() {
                         isConnected: true,
                         address: accounts[0],
                         isLoading: false,
-                        error: null
+                        error: null,
+                        totalAssets: {
+                            totalValue: 15000000,
+                            change24h: 2.5,
+                            assets: [
+                                { symbol: 'BTC', amount: 0.5, value: 30000000, change24h: 1.2 },
+                                { symbol: 'ETH', amount: 2.0, value: 4000000, change24h: -0.8 },
+                                { symbol: 'XRP', amount: 1000, value: 800000, change24h: 3.1 }
+                            ]
+                        }
                     });
                 }
             } else {
