@@ -26,8 +26,8 @@ declare global {
     }
 
     interface Window {
-        Telegram: {
-            WebApp: TelegramWebApp;
+        Telegram?: {
+            WebApp?: TelegramWebApp;
         };
         ethereum?: {
             request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
