@@ -20,9 +20,9 @@ export default function FloatingMenu() {
     const calculatePosition = (index: number) => {
         return {
             transform: isOpen
-                ? `translateX(-${60 * (index + 1)}px) scale(1) rotate(360deg)`
-                : 'translateX(0) scale(0) rotate(0deg)',
-            opacity: isOpen ? 0.3 : 0,
+                ? `translateX(-${60 * (index + 1)}px)`
+                : 'translateX(0)',
+            opacity: isOpen ? 1 : 0,
             transition: 'all 0.3s ease',
         };
     };
@@ -32,28 +32,23 @@ export default function FloatingMenu() {
             <div className="relative">
                 <button
                     onClick={handleClick}
-                    className={`relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#2481cc] transition-all duration-300 ${
-                        isOpen ? 'scale-[0.9]' : ''
-                    }`}
+                    className="relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#2481cc]"
                 >
                     <div className="flex h-6 w-6 flex-col items-center justify-center">
                         <span
                             className={`absolute h-[2px] w-6 bg-white transition-all duration-300 ${
                                 isOpen ? 'top-[11px] rotate-45' : 'top-[6px]'
                             }`}
-                            style={{ opacity: 0.3 }}
                         />
                         <span
                             className={`absolute h-[2px] w-6 bg-white transition-all duration-300 ${
                                 isOpen ? 'opacity-0' : 'top-[11px]'
                             }`}
-                            style={{ opacity: 0.3 }}
                         />
                         <span
                             className={`absolute h-[2px] w-6 bg-white transition-all duration-300 ${
                                 isOpen ? 'top-[11px] -rotate-45' : 'top-[16px]'
                             }`}
-                            style={{ opacity: 0.3 }}
                         />
                     </div>
                 </button>
