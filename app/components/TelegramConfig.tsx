@@ -6,10 +6,21 @@ function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+interface TelegramType {
+    WebApp: {
+        ready: () => void;
+        expand: () => void;
+        requestFullscreen: () => void;
+        disableVerticalSwipes: () => void;
+    };
+}
+
 export default function TelegramConfig() {
     useEffect(() => {
-        // @ts-expect-error: Telegram WebApp API
-        const tg = window.Telegram.WebApp;
+        if (typeof window === 'undefined') return;
+        
+        const tg = (window as { Telegram?: TelegramType }).Telegram?.WebApp;
+        if (!tg) return;
             
         if (isMobileDevice()) {
             tg.ready();
