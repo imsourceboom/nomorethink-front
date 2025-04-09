@@ -8,15 +8,14 @@ function isMobileDevice() {
 
 export default function TelegramConfig() {
     useEffect(() => {
-        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-            const tg = window.Telegram.WebApp;
+        // @ts-expect-error: Telegram WebApp API
+        const tg = window.Telegram.WebApp;
             
-            if (isMobileDevice()) {
-                tg.ready();
-                tg.expand();
-                tg.requestFullscreen();
-                tg.disableVerticalSwipes();
-            }
+        if (isMobileDevice()) {
+            tg.ready();
+            tg.expand();
+            tg.requestFullscreen();
+            tg.disableVerticalSwipes();
         }
     }, []);
 
