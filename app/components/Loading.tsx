@@ -12,7 +12,12 @@ export default function Loading() {
             setIsVisible(false);
         }, 3000);
 
-        return () => clearTimeout(timer);
+        // 로딩 중에는 FloatingMenu 숨기기
+        document.body.style.overflow = 'hidden';
+        return () => {
+            clearTimeout(timer);
+            document.body.style.overflow = 'unset';
+        };
     }, []);
 
     const container = {
@@ -49,13 +54,13 @@ export default function Loading() {
 
     return (
         <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black z-[9999]"
             initial="hidden"
             animate="show"
             exit="exit"
             variants={container}
         >
-            <div className="flex">
+            <div className="flex absolute-center">
                 {text.split('').map((char, index) => (
                     <motion.span
                         key={index}
