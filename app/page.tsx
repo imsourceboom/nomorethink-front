@@ -9,8 +9,8 @@ export default function Home() {
 
     return (
         <Template>
-            <div className="w-full h-full min-h-screen bg-black text-white overflow-y-auto safe-area-top">
-                <div className="max-w-md mx-auto pt-12 p-4 pb-24 space-y-6">
+            <div className="w-full h-full min-h-screen bg-black text-white overflow-y-auto">
+                <div className="max-w-md mx-auto pt-20 p-4 pb-24 space-y-6">
                     {/* 기존 섹션들 */}
                     <section className="bg-gray-900 rounded-lg p-4">
                         <h2 className="text-lg font-semibold mb-4">자산 현황</h2>
