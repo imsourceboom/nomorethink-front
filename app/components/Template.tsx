@@ -18,13 +18,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
                     opacity: 1,
                     y: 0
                 }}
-                exit={{ 
-                    opacity: 0,
-                    y: -20
-                }}
                 transition={{ 
-                    duration: 0.2,
-                    ease: [0.43, 0.13, 0.23, 0.96] // 커스텀 easing
+                    duration: 0.5,
+                    ease: [0.43, 0.13, 0.23, 0.96]
                 }}
             >
                 {children}
