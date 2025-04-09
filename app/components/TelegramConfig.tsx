@@ -1,34 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-
-function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-interface TelegramType {
-    WebApp: {
-        ready: () => void;
-        expand: () => void;
-        requestFullscreen: () => void;
-        disableVerticalSwipes: () => void;
-    };
-}
+import { useTelegram } from '../hooks/useTelegram';
 
 export default function TelegramConfig() {
+    const { initTelegram } = useTelegram();
+
     useEffect(() => {
-        if (typeof window === 'undefined') return;
-        
-        const tg = (window as { Telegram?: TelegramType }).Telegram?.WebApp;
-        if (!tg) return;
-            
-        if (isMobileDevice()) {
-            tg.ready();
-            tg.expand();
-            tg.requestFullscreen();
-            tg.disableVerticalSwipes();
-        }
-    }, []);
+        initTelegram();
+    }, [initTelegram]);
 
     return null;
 } 
