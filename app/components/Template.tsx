@@ -2,9 +2,16 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Template({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
+
+    useEffect(() => {
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.disableVerticalSwipes();
+        }
+    }, []);
 
     return (
         <AnimatePresence mode="wait">
