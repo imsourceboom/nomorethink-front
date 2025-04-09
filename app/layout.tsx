@@ -1,6 +1,5 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import FloatingMenu from './components/FloatingMenu';
@@ -10,11 +9,6 @@ import Prefetch from './components/Prefetch';
 import { useTelegram } from './hooks/useTelegram';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-    title: 'NoMoreThink',
-    description: 'NoMoreThink',
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     useTelegram(); // 텔레그램 설정 적용
