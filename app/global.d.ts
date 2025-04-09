@@ -5,23 +5,12 @@ declare global {
         expand: () => void;
         requestFullscreen: () => void;
         disableVerticalSwipes: () => void;
-        themeParams: {
-            bg_color: string;
-            text_color: string;
-            hint_color: string;
-            link_color: string;
-            button_color: string;
-            button_text_color: string;
-            secondary_bg_color: string;
-        };
         MainButton: {
             text: string;
             show: () => void;
             hide: () => void;
             onClick: (callback: () => void) => void;
         };
-        onEvent: (eventType: string, callback: () => void) => void;
-        offEvent: (eventType: string, callback: () => void) => void;
     }
 
     interface Window {

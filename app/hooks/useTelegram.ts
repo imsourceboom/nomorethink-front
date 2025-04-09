@@ -7,24 +7,37 @@ function isMobileDevice() {
 // Telegram WebApp SDK를 위한 커스텀 훅
 export const useTelegram = () => {
     const initTelegram = () => {
-        // @ts-expect-error: Telegram WebApp API
-        const tg = window.Telegram.WebApp;
-        tg.ready();
+        try {
+            if (typeof window === 'undefined') return;
+            if (!window.Telegram) return;
+            if (!window.Telegram.WebApp) return;
 
-        // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
-        if (isMobileDevice() && window.Telegram.WebApp) {
-            tg.expand();
-            tg.requestFullscreen();
-            tg.disableVerticalSwipes();
+            const tg = window.Telegram.WebApp;
+            tg.ready();
+
+            // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
+            if (isMobileDevice()) {
+                tg.expand();
+                tg.requestFullscreen();
+                tg.disableVerticalSwipes();
+            }
+        } catch (error) {
+            console.error('Telegram WebApp initialization failed:', error);
         }
     };
 
     const handleMainButtonClick = () => {
-        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+        try {
+            if (typeof window === 'undefined') return;
+            if (!window.Telegram) return;
+            if (!window.Telegram.WebApp) return;
+
             const tg = window.Telegram.WebApp;
             tg.MainButton.onClick(() => {
                 console.log('Telegram MainButton clicked');
             });
+        } catch (error) {
+            console.error('MainButton initialization failed:', error);
         }
     };
 
