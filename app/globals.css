@@ -37,8 +37,7 @@ html, body {
   /* 스크롤 체이닝 방지 */
   height: 100%;
   overflow-y: auto;
-  overscroll-behavior: none;
-  touch-action: none;
+  overscroll-behavior: contain;
 
   /* 기본 스타일 */
   background: var(--tg-bg-color);
@@ -51,6 +50,7 @@ html, body {
   /* 모바일 최적화 */
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* Safe Area 대응 */

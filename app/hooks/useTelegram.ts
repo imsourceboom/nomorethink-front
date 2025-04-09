@@ -26,11 +26,6 @@ export const useTelegram = () => {
           setThemeParams(tg.themeParams);
         }
       });
-
-      // 터치 이벤트 처리
-      document.body.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-      }, { passive: false });
     }
   }, []);
 
