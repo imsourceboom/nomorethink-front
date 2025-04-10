@@ -90,10 +90,6 @@ export default function AddPage() {
         })
     };
 
-    useEffect(() => {
-        console.log('window.Telegram:', window.Telegram);
-    }, []);
-
     return (
         <ErrorBoundary>
             <TelegramWrapper
