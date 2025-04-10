@@ -9,10 +9,10 @@ export default function Home() {
 
     return (
         <Template>
-            <div className="w-full h-full min-h-screen bg-black text-white overflow-y-auto">
+            <div className="w-full h-full min-h-screen bg-primary text-white overflow-y-auto">
                 <div className="max-w-md mx-auto pt-[20vh] p-4 pb-24 space-y-6">
                     {/* 기존 섹션들 */}
-                    <section className="bg-gray-900 rounded-lg p-4">
+                    <section className="bg-secondary rounded-lg p-4">
                         <h2 className="text-lg font-semibold mb-4">자산 현황</h2>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
@@ -28,7 +28,7 @@ export default function Home() {
                         </div>
                     </section>
 
-                    <section className="bg-gray-900 rounded-lg p-4">
+                    <section className="bg-secondary rounded-lg p-4">
                         <h2 className="text-lg font-semibold mb-4">보유 자산</h2>
                         <div className="space-y-4">
                             {totalAssets.assets.map((asset) => (
@@ -54,7 +54,7 @@ export default function Home() {
                     </section>
 
                     {/* 추가 섹션들 */}
-                    <section className="bg-gray-900 rounded-lg p-4">
+                    <section className="bg-secondary rounded-lg p-4">
                         <h2 className="text-lg font-semibold mb-4">최근 거래</h2>
                         <div className="space-y-4">
                             {[...Array(5)].map((_, i) => (
@@ -77,7 +77,7 @@ export default function Home() {
                         </div>
                     </section>
 
-                    <section className="bg-gray-900 rounded-lg p-4">
+                    <section className="bg-secondary rounded-lg p-4">
                         <h2 className="text-lg font-semibold mb-4">시장 동향</h2>
                         <div className="space-y-4">
                             {[...Array(5)].map((_, i) => (
@@ -102,7 +102,7 @@ export default function Home() {
                         </div>
                     </section>
 
-                    <section className="bg-gray-900 rounded-lg p-4">
+                    <section className="bg-secondary rounded-lg p-4">
                         <h2 className="text-lg font-semibold mb-4">뉴스</h2>
                         <div className="space-y-4">
                             {[...Array(5)].map((_, i) => (
