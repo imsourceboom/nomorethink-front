@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Select, { StylesConfig, SingleValue, ActionMeta } from 'react-select';
+import Select, { StylesConfig, SingleValue } from 'react-select';
 import DatePicker from 'react-datepicker';
 import { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale';
