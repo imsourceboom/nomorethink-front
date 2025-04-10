@@ -16,13 +16,15 @@ export const useTelegram = () => {
             return;
         }
 
+        // window.Telegram이 없는 경우 초기화 생략
         if (!window.Telegram) {
             console.log('window.Telegram이 없습니다. 텔레그램 환경이 아닌 것 같습니다.');
             return;
         }
 
+        // window.Telegram.WebApp이 없는 경우 초기화 생략
         if (!window.Telegram.WebApp) {
-            console.error('window.Telegram.WebApp이 없습니다.');
+            console.log('window.Telegram.WebApp이 없습니다. 스크립트가 아직 로드되지 않았을 수 있습니다.');
             return;
         }
 
@@ -30,45 +32,56 @@ export const useTelegram = () => {
         
         try {
             // Telegram WebApp 초기화
-            tg.ready();
-            console.log('Telegram WebApp이 준비되었습니다.');
+            if (typeof tg.ready === 'function') {
+                tg.ready();
+                console.log('Telegram WebApp이 준비되었습니다.');
+            }
             
             // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
-            if (isMobileDevice() && window.Telegram.WebApp) {
+            if (isMobileDevice()) {
                 console.log('모바일 디바이스에서 텔레그램 웹앱 기능을 활성화합니다.');
-                tg.expand();
+                
+                // expand 시도
+                if (typeof tg.expand === 'function') {
+                    try {
+                        tg.expand();
+                        console.log('화면 확장 완료');
+                    } catch (error) {
+                        console.error('화면 확장 실패:', error);
+                    }
+                }
                 
                 // fullscreen 요청 시도
-                try {
-                    tg.requestFullscreen();
-                    console.log('전체 화면 요청됨');
-                } catch (error) {
-                    console.error('전체 화면 요청 실패:', error);
+                if (typeof tg.requestFullscreen === 'function') {
+                    try {
+                        tg.requestFullscreen();
+                        console.log('전체 화면 요청됨');
+                    } catch (error) {
+                        console.error('전체 화면 요청 실패:', error);
+                    }
                 }
                 
                 // 세로 스와이프 비활성화 시도
-                try {
-                    if (typeof tg.disableVerticalSwipes === 'function') {
+                if (typeof tg.disableVerticalSwipes === 'function') {
+                    try {
                         tg.disableVerticalSwipes();
                         console.log('세로 스와이프 비활성화됨');
-                    } else {
-                        console.warn('disableVerticalSwipes 함수가 없습니다.');
+                    } catch (error) {
+                        console.error('세로 스와이프 비활성화 실패:', error);
                     }
-                } catch (error) {
-                    console.error('세로 스와이프 비활성화 실패:', error);
                 }
                 
                 // 종료 확인 활성화 시도
-                try {
-                    if (typeof tg.enableClosingConfirmation === 'function') {
+                if (typeof tg.enableClosingConfirmation === 'function') {
+                    try {
                         tg.enableClosingConfirmation();
                         console.log('종료 확인 활성화됨');
-                    } else {
-                        console.warn('enableClosingConfirmation 함수가 없습니다.');
+                    } catch (error) {
+                        console.error('종료 확인 활성화 실패:', error);
                     }
-                } catch (error) {
-                    console.error('종료 확인 활성화 실패:', error);
                 }
+            } else {
+                console.log('모바일 디바이스가 아니거나 텔레그램 환경이 아닙니다.');
             }
         } catch (error) {
             console.error('Telegram WebApp 초기화 중 오류 발생:', error);

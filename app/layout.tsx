@@ -1,3 +1,4 @@
+// 이 파일은 서버 컴포넌트입니다
 import { Inter } from 'next/font/google';
 import './globals.css';
 import ClientLayout from './ClientLayout';

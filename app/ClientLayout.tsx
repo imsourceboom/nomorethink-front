@@ -10,31 +10,46 @@ import Script from 'next/script';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const { initTelegram } = useTelegram();
-    // 클라이언트 사이드 렌더링 여부를 확인하기 위한 상태
-    const [isClient, setIsClient] = useState(false);
+    const [mounted, setMounted] = useState(false);
     
     useEffect(() => {
-        // 클라이언트 사이드에서만 실행
-        setIsClient(true);
+        // 마운트 상태 업데이트
+        setMounted(true);
         
-        // 텔레그램 WebApp 초기화
-        initTelegram();
+        // 텔레그램 WebApp 스크립트 직접 추가
+        const script = document.createElement('script');
+        script.src = 'https://telegram.org/js/telegram-web-app.js';
+        script.async = true;
+        script.onload = () => {
+            console.log('텔레그램 WebApp 스크립트 로드 완료');
+            setTimeout(() => {
+                // 스크립트 로드 완료 후 WebApp 초기화
+                initTelegram();
+            }, 100);
+        };
+        
+        // 이미 스크립트가 있는지 확인
+        if (!document.querySelector('script[src="https://telegram.org/js/telegram-web-app.js"]')) {
+            document.head.appendChild(script);
+        } else {
+            // 이미 있다면 바로 초기화
+            initTelegram();
+        }
+        
+        return () => {
+            // 컴포넌트 언마운트 시 스크립트 제거 (필요한 경우)
+            // document.head.removeChild(script);
+        };
     }, [initTelegram]);
 
-    // 서버 사이드 렌더링에서는 최소한의 컴포넌트만 반환
-    if (!isClient) {
-        return (
-            <>
-                <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
-                <div className="min-h-screen bg-[var(--bg-color)]">{children}</div>
-            </>
-        );
+    // 첫 번째 서버 렌더링에서는 최소한의 컨테이너만 반환
+    if (!mounted) {
+        return <div className="min-h-screen bg-[#202124]">{children}</div>;
     }
 
-    // 클라이언트 사이드 렌더링에서는 모든 컴포넌트 반환
+    // 클라이언트 렌더링에서는 전체 UI 반환
     return (
         <>
-            <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
             <Loading />
             <Prefetch />
             <Template>
