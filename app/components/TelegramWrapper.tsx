@@ -30,7 +30,7 @@ export default function TelegramWrapper({
                 tg.MainButton.onClick(onMainButtonClick);
             }
         } else {
-            alert('Telegram WebApp이 올바르게 로드되지 않았습니다. 텔레그램 환경에서 실행해주세요.');
+            console.warn('Telegram WebApp이 로드되지 않았습니다. 개발 환경에서는 일부 기능이 제한될 수 있습니다.');
         }
         
         return () => {
