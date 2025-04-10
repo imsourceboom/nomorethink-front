@@ -102,18 +102,23 @@ export default function FloatingMenu() {
                     backgroundColor: '#AB342880' // 50% 투명도
                 }}
             >
-                {/* 햄버거 아이콘 */}
-                <div className={`absolute w-8 h-6 flex flex-col justify-between items-center transition-all duration-200 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
-                    <div className="w-8 h-0.5 bg-white rounded-full"></div>
-                    <div className="w-8 h-0.5 bg-white rounded-full"></div>
-                    <div className="w-8 h-0.5 bg-white rounded-full"></div>
-                </div>
-                
-                {/* X 아이콘 */}
-                <div className={`absolute w-8 h-8 flex items-center justify-center transition-all duration-200 ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
-                    <div className="w-8 h-0.5 bg-white rounded-full absolute transform rotate-45"></div>
-                    <div className="w-8 h-0.5 bg-white rounded-full absolute transform -rotate-45"></div>
-                </div>
+                {/* SVG 아이콘 */}
+                <svg className="w-8 h-8 text-white transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {isOpen ? (
+                        // X 아이콘
+                        <>
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </>
+                    ) : (
+                        // 햄버거 아이콘
+                        <>
+                            <line x1="4" y1="8" x2="20" y2="8"></line>
+                            <line x1="4" y1="16" x2="20" y2="16"></line>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                        </>
+                    )}
+                </svg>
             </button>
         </div>
     );
