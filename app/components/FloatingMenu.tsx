@@ -102,10 +102,10 @@ export default function FloatingMenu() {
                     backgroundColor: '#AB342880' // 50% 투명도
                 }}
             >
-                <div className="w-8 h-8 relative flex items-center justify-center">
-                    <span className={`absolute h-0.5 bg-white transform transition-all duration-300 ${isOpen ? 'w-8 rotate-45' : 'w-8 -translate-y-2'}`} />
-                    <span className={`absolute h-0.5 bg-white transform transition-all duration-300 ${isOpen ? 'opacity-0 w-0' : 'opacity-100 w-8'}`} />
-                    <span className={`absolute h-0.5 bg-white transform transition-all duration-300 ${isOpen ? 'w-8 -rotate-45' : 'w-8 translate-y-2'}`} />
+                <div className="w-8 h-8 relative flex items-center justify-center overflow-hidden">
+                    <span className={`absolute h-0.5 bg-white transform transition-all duration-200 ease-in-out ${isOpen ? 'w-8 rotate-45 translate-y-0' : 'w-8 -translate-y-2'}`} />
+                    <span className={`absolute h-0.5 bg-white transform transition-all duration-50 ${isOpen ? 'opacity-0 w-0 scale-0' : 'opacity-100 w-8 scale-100'}`} />
+                    <span className={`absolute h-0.5 bg-white transform transition-all duration-200 ease-in-out ${isOpen ? 'w-8 -rotate-45 translate-y-0' : 'w-8 translate-y-2'}`} />
                 </div>
             </button>
         </div>
