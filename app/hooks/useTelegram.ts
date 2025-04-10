@@ -1,10 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 export const useTelegram = () => {
-    const [isReady, setIsReady] = useState(false);
-
     // 모바일 디바이스인지 확인하는 함수
     function isMobileDevice() {
         if (typeof navigator === 'undefined') return false;
@@ -42,7 +38,6 @@ export const useTelegram = () => {
         try {
             // Telegram WebApp 초기화
             tg.ready();
-            setIsReady(true);
             console.log('Telegram WebApp이 준비되었습니다.');
             
             // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
@@ -107,5 +102,5 @@ export const useTelegram = () => {
     return {
         initTelegram,
         handleMainButtonClick
-    };
+    }; 
 }; 
