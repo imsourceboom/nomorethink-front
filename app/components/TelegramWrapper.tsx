@@ -29,6 +29,8 @@ export default function TelegramWrapper({
             if (onMainButtonClick) {
                 tg.MainButton.onClick(onMainButtonClick);
             }
+        } else {
+            alert('Telegram WebApp이 올바르게 로드되지 않았습니다. 텔레그램 환경에서 실행해주세요.');
         }
         
         return () => {
