@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         'telegram': '#0088cc',
         'telegram-secondary': '#0099e6',
+        'primary': 'var(--bg-color)',
+        'secondary': 'var(--secondary-bg-color)',
       },
     },
   },
