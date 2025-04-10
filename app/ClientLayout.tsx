@@ -6,7 +6,6 @@ import Template from './components/Template';
 import Loading from './components/Loading';
 import Prefetch from './components/Prefetch';
 import { useTelegram } from './hooks/useTelegram';
-import Script from 'next/script';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const { initTelegram } = useTelegram();

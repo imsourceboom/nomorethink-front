@@ -123,7 +123,7 @@ export default function AddPage() {
                                 </label>
                                 <Select
                                     value={formData.coin}
-                                    onChange={(option: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => 
+                                    onChange={(option: SingleValue<OptionType>) => 
                                         option && setFormData(prev => ({ ...prev, coin: option }))}
                                     options={coinOptions}
                                     styles={selectStyles}
