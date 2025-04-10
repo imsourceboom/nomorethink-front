@@ -97,31 +97,31 @@ export default function FloatingMenu() {
             {/* 메인 토글 버튼 */}
             <button
                 onClick={handleClick}
-                className="w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 relative overflow-hidden"
+                className="w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 relative"
                 style={{
                     backgroundColor: '#AB342880' // 50% 투명도
                 }}
             >
                 {/* 애니메이션 토글 아이콘 */}
-                <div className="w-8 h-6 flex flex-col justify-between items-center relative">
+                <div className="w-8 h-8 flex items-center justify-center">
                     {/* 상단 선 - X의 왼쪽 위에서 오른쪽 아래로 회전 */}
                     <div 
-                        className={`w-8 h-0.5 bg-white rounded-full transition-all duration-300 origin-center absolute top-0 ${
-                            isOpen ? 'rotate-45 translate-y-[11px]' : ''
+                        className={`w-8 h-0.5 bg-white rounded-full absolute transition-all duration-300 ${
+                            isOpen ? 'rotate-45' : '-translate-y-2.5'
                         }`}
                     ></div>
                     
                     {/* 중간 선 - 투명도로 사라짐 */}
                     <div 
-                        className={`w-8 h-0.5 bg-white rounded-full transition-all duration-300 absolute top-1/2 -translate-y-1/2 ${
-                            isOpen ? 'opacity-0' : 'opacity-100'
+                        className={`w-8 h-0.5 bg-white rounded-full absolute transition-all duration-300 ${
+                            isOpen ? 'opacity-0 scale-0' : 'opacity-100'
                         }`}
                     ></div>
                     
                     {/* 하단 선 - X의 왼쪽 아래에서 오른쪽 위로 회전 */}
                     <div 
-                        className={`w-8 h-0.5 bg-white rounded-full transition-all duration-300 origin-center absolute bottom-0 ${
-                            isOpen ? '-rotate-45 -translate-y-[11px]' : ''
+                        className={`w-8 h-0.5 bg-white rounded-full absolute transition-all duration-300 ${
+                            isOpen ? '-rotate-45' : 'translate-y-2.5'
                         }`}
                     ></div>
                 </div>
