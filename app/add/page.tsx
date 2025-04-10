@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import DatePicker from 'react-datepicker';
@@ -98,6 +98,10 @@ export default function AddPage() {
             borderRadius: '12px'
         })
     };
+
+    useEffect(() => {
+        console.log('window.Telegram:', window.Telegram);
+    }, []);
 
     return (
         <ErrorBoundary>
