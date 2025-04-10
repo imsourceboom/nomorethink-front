@@ -54,7 +54,7 @@ export default function Loading() {
 
     return (
         <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black z-[9999]"
+            className="fixed inset-0 flex items-center justify-center bg-[#202124] z-[9999]"
             initial="hidden"
             animate="show"
             exit="exit"
@@ -66,11 +66,11 @@ export default function Loading() {
                         key={index}
                         variants={item}
                         className={`text-4xl font-bold ${char === ' ' ? 'mx-2' : ''} ${
-                            index < 2 ? 'text-[#2481cc]' : // No
-                            index === 2 ? 'mr-2 text-[#2481cc]' : // space after No
-                            index < 7 ? 'text-[#1465A2]' : // More
-                            index === 7 ? 'mr-2 text-[#1465A2]' : // space after More
-                            'text-[#0C4870]' // Think
+                            index < 2 ? 'text-[#FEF58D]' : // No
+                            index === 2 ? 'mr-2 text-[#FEF58D]' : // space after No
+                            index < 7 ? 'text-[#FEF58D]' : // More
+                            index === 7 ? 'mr-2 text-[#FEF58D]' : // space after More
+                            'text-[#FEF58D]' // Think
                         }`}
                     >
                         {char}
