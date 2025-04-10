@@ -5,6 +5,7 @@ declare global {
         expand: () => void;
         requestFullscreen: () => void;
         disableVerticalSwipes: () => void;
+        enableClosingConfirmation: () => void;
         MainButton: {
             text: string;
             show: () => void;

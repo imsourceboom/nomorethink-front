@@ -1,68 +1,80 @@
 'use client';
 
-function isMobileDevice() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+import { useEffect, useState } from 'react';
 
-// Telegram WebApp SDK를 위한 커스텀 훅
 export const useTelegram = () => {
+    const [isReady, setIsReady] = useState(false);
+
+    // 모바일 디바이스인지 확인하는 함수
+    function isMobileDevice() {
+        if (typeof navigator === 'undefined') return false;
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    // Telegram WebApp SDK를 위한 커스텀 훅
     const initTelegram = () => {
+        if (typeof window === 'undefined') {
+            console.log('window 객체가 없습니다. 서버 사이드 렌더링 중입니다.');
+            return;
+        }
+
+        if (!window.Telegram) {
+            console.log('window.Telegram이 없습니다. 텔레그램 환경이 아닌 것 같습니다.');
+            return;
+        }
+
+        if (!window.Telegram.WebApp) {
+            console.error('window.Telegram.WebApp이 없습니다.');
+            return;
+        }
+
+        const tg = window.Telegram.WebApp;
+        
         try {
-            if (typeof window === 'undefined') return;
-            if (!window.Telegram) {
-                console.error('window.Telegram이 없습니다.');
-                return;
-            }
-            if (!window.Telegram.WebApp) {
-                console.error('window.Telegram.WebApp이 없습니다.');
-                return;
-            }
-
-            const tg = window.Telegram.WebApp;
-            
-            // WebApp이 준비되면 실행
+            // Telegram WebApp 초기화
             tg.ready();
+            setIsReady(true);
             console.log('Telegram WebApp이 준비되었습니다.');
-
+            
             // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
-            if (isMobileDevice()) {
-                console.log('모바일 디바이스입니다.');
+            if (isMobileDevice() && window.Telegram.WebApp) {
+                console.log('모바일 디바이스에서 텔레그램 웹앱 기능을 활성화합니다.');
+                tg.expand();
                 
-                // WebApp이 완전히 로드될 때까지 대기
-                const checkWebAppReady = () => {
-                    try {
-                        // expand와 requestFullscreen 먼저 실행
-                        tg.expand();
-                        console.log('expand 완료');
-                        
-                        tg.requestFullscreen();
-                        console.log('requestFullscreen 완료');
-
-                        // disableVerticalSwipes 시도
-                        if (typeof tg.disableVerticalSwipes === 'function') {
-                            tg.disableVerticalSwipes();
-                            console.log('disableVerticalSwipes 완료');
-                        } else {
-                            console.warn('disableVerticalSwipes 함수가 없습니다.');
-                            // 1초 후 다시 시도
-                            setTimeout(checkWebAppReady, 1000);
-                        }
-                    } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류';
-                        console.error('오류 발생: ' + errorMessage);
-                        // 오류 발생 시 1초 후 다시 시도
-                        setTimeout(checkWebAppReady, 1000);
+                // fullscreen 요청 시도
+                try {
+                    tg.requestFullscreen();
+                    console.log('전체 화면 요청됨');
+                } catch (error) {
+                    console.error('전체 화면 요청 실패:', error);
+                }
+                
+                // 세로 스와이프 비활성화 시도
+                try {
+                    if (typeof tg.disableVerticalSwipes === 'function') {
+                        tg.disableVerticalSwipes();
+                        console.log('세로 스와이프 비활성화됨');
+                    } else {
+                        console.warn('disableVerticalSwipes 함수가 없습니다.');
                     }
-                };
-
-                // 초기 시도
-                setTimeout(checkWebAppReady, 1000);
-            } else {
-                console.log('모바일 디바이스가 아닙니다.');
+                } catch (error) {
+                    console.error('세로 스와이프 비활성화 실패:', error);
+                }
+                
+                // 종료 확인 활성화 시도
+                try {
+                    if (typeof tg.enableClosingConfirmation === 'function') {
+                        tg.enableClosingConfirmation();
+                        console.log('종료 확인 활성화됨');
+                    } else {
+                        console.warn('enableClosingConfirmation 함수가 없습니다.');
+                    }
+                } catch (error) {
+                    console.error('종료 확인 활성화 실패:', error);
+                }
             }
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류';
-            console.error('초기화 오류: ' + errorMessage);
+            console.error('Telegram WebApp 초기화 중 오류 발생:', error);
         }
     };
 

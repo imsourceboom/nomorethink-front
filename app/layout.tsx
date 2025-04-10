@@ -7,6 +7,7 @@ import Template from './components/Template';
 import Loading from './components/Loading';
 import Prefetch from './components/Prefetch';
 import { useTelegram } from './hooks/useTelegram';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,6 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
     return (
         <html lang="ko">
+            <head>
+                <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+            </head>
             <body className={inter.className}>
                 <Loading />
                 <Prefetch />

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import DatePicker from 'react-datepicker';
@@ -189,7 +191,7 @@ export default function AddPage() {
                         </form>
                     </div>
                 </main>
-                <FloatingMenu onMenuClick={handleMenuClick} />
+                <FloatingMenu />
             </TelegramWrapper>
         </ErrorBoundary>
     );

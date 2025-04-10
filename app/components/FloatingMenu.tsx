@@ -12,6 +12,7 @@ export default function FloatingMenu() {
     };
 
     const handleNavigation = (path: string) => {
+        console.log(`Navigating to: ${path}`);
         router.push(path);
         setIsOpen(false);
     };
