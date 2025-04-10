@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const useTelegram = () => {
-    const [isReady, setIsReady] = useState(false);
+    const [, setIsReady] = useState(false);
 
     // 모바일 디바이스인지 확인하는 함수
     function isMobileDevice() {
