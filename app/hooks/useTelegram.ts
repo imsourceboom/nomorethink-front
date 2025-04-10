@@ -11,6 +11,15 @@ export const useTelegram = () => {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
+    // 텔레그램 미니앱 환경인지 확인하는 함수
+    function isTelegramMiniApp() {
+        if (typeof window === 'undefined') return false;
+        if (!window.Telegram || !window.Telegram.WebApp) return false;
+        
+        // 텔레그램 WebApp 플랫폼 확인 (platform 속성이 있으면 실제 텔레그램 환경)
+        return !!window.Telegram.WebApp.platform;
+    }
+
     // Telegram WebApp SDK를 위한 커스텀 훅
     const initTelegram = () => {
         if (typeof window === 'undefined') {
@@ -40,6 +49,16 @@ export const useTelegram = () => {
             if (isMobileDevice() && window.Telegram.WebApp) {
                 console.log('모바일 디바이스에서 텔레그램 웹앱 기능을 활성화합니다.');
                 tg.expand();
+                
+                // 텔레그램 미니앱 환경에서만 requestFullscreen 실행
+                if (isTelegramMiniApp() && typeof tg.requestFullscreen === 'function') {
+                    try {
+                        tg.requestFullscreen();
+                        console.log('전체 화면 요청됨');
+                    } catch (error) {
+                        console.error('전체 화면 요청 실패:', error);
+                    }
+                }
                 
                 // 세로 스와이프 비활성화 시도
                 try {
