@@ -97,28 +97,27 @@ export default function FloatingMenu() {
             {/* 메인 토글 버튼 */}
             <button
                 onClick={handleClick}
-                className="w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
+                className="w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 relative overflow-hidden"
                 style={{
                     backgroundColor: '#AB342880' // 50% 투명도
                 }}
             >
-                {/* SVG 아이콘 */}
-                <svg className="w-8 h-8 text-white transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    {isOpen ? (
-                        // X 아이콘
-                        <>
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </>
-                    ) : (
-                        // 햄버거 아이콘
-                        <>
-                            <line x1="4" y1="8" x2="20" y2="8"></line>
-                            <line x1="4" y1="16" x2="20" y2="16"></line>
-                            <line x1="4" y1="12" x2="20" y2="12"></line>
-                        </>
-                    )}
-                </svg>
+                {/* 햄버거 아이콘 */}
+                {!isOpen && (
+                    <div className="absolute w-8 h-6 flex flex-col justify-between items-center">
+                        <div className="w-8 h-0.5 bg-white rounded-full"></div>
+                        <div className="w-8 h-0.5 bg-white rounded-full"></div>
+                        <div className="w-8 h-0.5 bg-white rounded-full"></div>
+                    </div>
+                )}
+                
+                {/* X 아이콘 */}
+                {isOpen && (
+                    <div className="absolute w-8 h-8 flex items-center justify-center">
+                        <div className="w-8 h-0.5 bg-white rounded-full absolute transform rotate-45"></div>
+                        <div className="w-8 h-0.5 bg-white rounded-full absolute transform -rotate-45"></div>
+                    </div>
+                )}
             </button>
         </div>
     );
