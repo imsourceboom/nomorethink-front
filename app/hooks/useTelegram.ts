@@ -51,16 +51,6 @@ export const useTelegram = () => {
                     }
                 }
                 
-                // fullscreen 요청 시도
-                if (typeof tg.requestFullscreen === 'function') {
-                    try {
-                        tg.requestFullscreen();
-                        console.log('전체 화면 요청됨');
-                    } catch (error) {
-                        console.error('전체 화면 요청 실패:', error);
-                    }
-                }
-                
                 // 세로 스와이프 비활성화 시도
                 if (typeof tg.disableVerticalSwipes === 'function') {
                     try {
