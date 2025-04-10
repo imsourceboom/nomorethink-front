@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
+import Select, { StylesConfig, SingleValue, ActionMeta } from 'react-select';
 import DatePicker from 'react-datepicker';
 import { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale';
@@ -60,32 +60,32 @@ export default function AddPage() {
     const selectStyles: StylesConfig<OptionType, false> = {
         control: (base) => ({
             ...base,
-            backgroundColor: '#17171B',
-            borderColor: '#2D2D35',
+            backgroundColor: 'var(--secondary-bg-color)',
+            borderColor: 'var(--input-border-color)',
             borderRadius: '12px',
             padding: '4px',
             '&:hover': {
-                borderColor: '#3366FF'
+                borderColor: 'var(--accent-color)'
             },
             boxShadow: 'none',
             minHeight: '48px'
         }),
         option: (base, state) => ({
             ...base,
-            backgroundColor: state.isSelected ? '#3366FF' : '#17171B',
-            color: '#FFFFFF',
+            backgroundColor: state.isSelected ? 'var(--accent-color)' : 'var(--secondary-bg-color)',
+            color: 'var(--text-color)',
             '&:hover': {
-                backgroundColor: state.isSelected ? '#3366FF' : '#2D2D35'
+                backgroundColor: state.isSelected ? 'var(--accent-color)' : '#2D3748'
             }
         }),
         singleValue: (base) => ({
             ...base,
-            color: '#FFFFFF'
+            color: 'var(--text-color)'
         }),
         menu: (base) => ({
             ...base,
-            backgroundColor: '#17171B',
-            border: '1px solid #2D2D35',
+            backgroundColor: 'var(--secondary-bg-color)',
+            border: '1px solid var(--input-border-color)',
             borderRadius: '12px'
         })
     };
@@ -100,7 +100,7 @@ export default function AddPage() {
                 mainButtonText="설정 완료"
                 onMainButtonClick={handleSubmit}
             >
-                <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-32 pb-6 bg-black">
+                <main className="flex min-h-screen flex-col items-center justify-start px-4 pt-32 pb-6 bg-[var(--bg-color)]">
                     <div className="w-full max-w-md mx-auto">
                         <Header 
                             isConnected={isConnected}
@@ -123,8 +123,8 @@ export default function AddPage() {
                                 </label>
                                 <Select
                                     value={formData.coin}
-                                    onChange={(option: OptionType) => 
-                                        setFormData(prev => ({ ...prev, coin: option }))}
+                                    onChange={(option: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => 
+                                        option && setFormData(prev => ({ ...prev, coin: option }))}
                                     options={coinOptions}
                                     styles={selectStyles}
                                 />
@@ -140,7 +140,7 @@ export default function AddPage() {
                                         value={formData.price}
                                         onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
                                         placeholder="금액을 입력해 주세요"
-                                        className="w-full px-4 py-3 bg-[#17171B] border border-[#2D2D35] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[#3366FF]"
+                                        className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--accent-color)]"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
                                         KRW
@@ -155,19 +155,19 @@ export default function AddPage() {
                                 <div className="grid grid-cols-3 gap-2 mb-4">
                                     <button
                                         type="button"
-                                        className="px-4 py-2 bg-[#2D2D35] rounded-xl text-white hover:bg-[#3366FF] transition-colors"
+                                        className="px-4 py-2 bg-[var(--secondary-bg-color)] rounded-xl text-white hover:bg-[var(--accent-color)] transition-colors"
                                     >
                                         매일
                                     </button>
                                     <button
                                         type="button"
-                                        className="px-4 py-2 bg-[#2D2D35] rounded-xl text-white hover:bg-[#3366FF] transition-colors"
+                                        className="px-4 py-2 bg-[var(--secondary-bg-color)] rounded-xl text-white hover:bg-[var(--accent-color)] transition-colors"
                                     >
                                         매주
                                     </button>
                                     <button
                                         type="button"
-                                        className="px-4 py-2 bg-[#2D2D35] rounded-xl text-white hover:bg-[#3366FF] transition-colors"
+                                        className="px-4 py-2 bg-[var(--secondary-bg-color)] rounded-xl text-white hover:bg-[var(--accent-color)] transition-colors"
                                     >
                                         매월
                                     </button>
@@ -181,7 +181,7 @@ export default function AddPage() {
                                     timeCaption="시간"
                                     dateFormat="HH:mm"
                                     locale="ko"
-                                    className="w-full px-4 py-3 bg-[#17171B] border border-[#2D2D35] rounded-xl text-white focus:outline-none focus:border-[#3366FF]"
+                                    className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
                                 />
                             </div>
                         </form>

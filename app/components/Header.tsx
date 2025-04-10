@@ -38,7 +38,7 @@ export default function Header({
                             <button
                                 onClick={onWalletConnect}
                                 disabled={isLoading}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                                className="bg-[var(--accent-color)] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
                                 aria-label="지갑 연결하기"
                             >
                                 {isLoading && <LoadingSpinner size="sm" />}

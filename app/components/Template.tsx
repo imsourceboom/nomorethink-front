@@ -10,7 +10,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <AnimatePresence mode="wait">
             <motion.div
                 key={pathname}
-                className="w-full h-full bg-black content-safe-area"
+                className="w-full h-full bg-[var(--bg-color)] content-safe-area"
                 initial={{ 
                     opacity: 0,
                 }}
