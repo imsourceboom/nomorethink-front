@@ -8,9 +8,8 @@ import { ko } from 'date-fns/locale';
 import "react-datepicker/dist/react-datepicker.css";
 import TelegramWrapper from '@/app/components/TelegramWrapper';
 import Header from '@/app/components/Header';
-import FloatingMenu from '@/app/components/FloatingMenu';
-import { useWallet } from '@/app/hooks/useWallet';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
+import { useWallet } from '@/app/hooks/useWallet';
 
 registerLocale('ko', ko);
 
@@ -183,7 +182,6 @@ export default function AddPage() {
                         </form>
                     </div>
                 </main>
-                <FloatingMenu />
             </TelegramWrapper>
         </ErrorBoundary>
     );

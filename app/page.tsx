@@ -1,6 +1,5 @@
 'use client';
 
-import FloatingMenu from './components/FloatingMenu';
 import Template from './components/Template';
 import { useWallet } from './hooks/useWallet';
 
@@ -118,7 +117,6 @@ export default function Home() {
                     </section>
                 </div>
             </div>
-            <FloatingMenu />
         </Template>
     );
 }
