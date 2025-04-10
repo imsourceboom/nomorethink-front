@@ -57,10 +57,6 @@ export default function AddPage() {
         });
     };
 
-    const handleMenuClick = () => {
-        console.log('메뉴 클릭됨');
-    };
-
     const selectStyles: StylesConfig<OptionType, false> = {
         control: (base) => ({
             ...base,
