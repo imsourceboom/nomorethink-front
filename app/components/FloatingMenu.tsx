@@ -103,7 +103,7 @@ export default function FloatingMenu() {
                 }}
             >
                 {/* 햄버거 아이콘 */}
-                <div className={`absolute w-8 h-8 flex flex-col justify-between items-center transition-all duration-200 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
+                <div className={`absolute w-8 h-6 flex flex-col justify-between items-center transition-all duration-200 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
                     <div className="w-8 h-0.5 bg-white rounded-full"></div>
                     <div className="w-8 h-0.5 bg-white rounded-full"></div>
                     <div className="w-8 h-0.5 bg-white rounded-full"></div>
