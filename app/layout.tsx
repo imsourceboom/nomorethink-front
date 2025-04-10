@@ -1,31 +1,18 @@
-'use client';
-
 import { Inter } from 'next/font/google';
 import './globals.css';
-import FloatingMenu from './components/FloatingMenu';
-import Template from './components/Template';
-import Loading from './components/Loading';
-import Prefetch from './components/Prefetch';
-import { useTelegram } from './hooks/useTelegram';
+import ClientLayout from './ClientLayout';
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    useTelegram(); // 텔레그램 설정 적용
-
     return (
         <html lang="ko">
             <head>
                 <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
             </head>
             <body className={inter.className}>
-                <Loading />
-                <Prefetch />
-                <Template>
-                    {children}
-                </Template>
-                <FloatingMenu />
+                <ClientLayout>{children}</ClientLayout>
             </body>
         </html>
     );
