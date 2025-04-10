@@ -4,11 +4,11 @@
 
 :root {
   /* Telegram WebApp 테마 변수 */
-  --bg-color: rgb(32, 33, 36);
+  --bg-color: #202124;
   --text-color: #ffffff;
   --button-color: #3366FF;
   --button-text-color: #ffffff;
-  --secondary-bg-color: rgb(41, 42, 45);
+  --secondary-bg-color: #292A2D;
   --accent-color: #3366FF;
   --input-border-color: #2D3748;
   --tg-bg-color: #0E1621;
