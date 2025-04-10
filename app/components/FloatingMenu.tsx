@@ -104,7 +104,7 @@ export default function FloatingMenu() {
             >
                 <div className="w-8 h-8 relative flex items-center justify-center">
                     <span className={`absolute h-0.5 bg-white transform transition-all duration-300 ${isOpen ? 'w-8 rotate-45' : 'w-8 -translate-y-2'}`} />
-                    <span className={`absolute h-0.5 bg-white w-8 transform transition-all duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
+                    <span className={`absolute h-0.5 bg-white transform transition-all duration-300 ${isOpen ? 'opacity-0 w-0' : 'opacity-100 w-8'}`} />
                     <span className={`absolute h-0.5 bg-white transform transition-all duration-300 ${isOpen ? 'w-8 -rotate-45' : 'w-8 translate-y-2'}`} />
                 </div>
             </button>
