@@ -102,22 +102,29 @@ export default function FloatingMenu() {
                     backgroundColor: '#AB342880' // 50% 투명도
                 }}
             >
-                {/* 햄버거 아이콘 */}
-                {!isOpen && (
-                    <div className="absolute w-8 h-6 flex flex-col justify-between items-center">
-                        <div className="w-8 h-0.5 bg-white rounded-full"></div>
-                        <div className="w-8 h-0.5 bg-white rounded-full"></div>
-                        <div className="w-8 h-0.5 bg-white rounded-full"></div>
-                    </div>
-                )}
-                
-                {/* X 아이콘 */}
-                {isOpen && (
-                    <div className="absolute w-8 h-8 flex items-center justify-center">
-                        <div className="w-8 h-0.5 bg-white rounded-full absolute transform rotate-45"></div>
-                        <div className="w-8 h-0.5 bg-white rounded-full absolute transform -rotate-45"></div>
-                    </div>
-                )}
+                {/* 애니메이션 토글 아이콘 */}
+                <div className="w-8 h-6 flex flex-col justify-between items-center relative">
+                    {/* 상단 선 - X의 왼쪽 위에서 오른쪽 아래로 회전 */}
+                    <div 
+                        className={`w-8 h-0.5 bg-white rounded-full transition-all duration-300 origin-center absolute top-0 ${
+                            isOpen ? 'rotate-45 translate-y-[11px]' : ''
+                        }`}
+                    ></div>
+                    
+                    {/* 중간 선 - 투명도로 사라짐 */}
+                    <div 
+                        className={`w-8 h-0.5 bg-white rounded-full transition-all duration-300 absolute top-1/2 -translate-y-1/2 ${
+                            isOpen ? 'opacity-0' : 'opacity-100'
+                        }`}
+                    ></div>
+                    
+                    {/* 하단 선 - X의 왼쪽 아래에서 오른쪽 위로 회전 */}
+                    <div 
+                        className={`w-8 h-0.5 bg-white rounded-full transition-all duration-300 origin-center absolute bottom-0 ${
+                            isOpen ? '-rotate-45 -translate-y-[11px]' : ''
+                        }`}
+                    ></div>
+                </div>
             </button>
         </div>
     );
