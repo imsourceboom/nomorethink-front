@@ -6,13 +6,9 @@ import { useTelegram } from '../hooks/useTelegram';
 /**
  * TelegramWrapper 컴포넌트 props 인터페이스
  * @property {React.ReactNode} children - 래핑할 자식 컴포넌트
- * @property {string} mainButtonText - 텔레그램 웹앱 메인 버튼의 텍스트
- * @property {Function} onMainButtonClick - 메인 버튼 클릭 시 호출할 함수
  */
 interface TelegramWrapperProps {
     children: React.ReactNode;
-    mainButtonText?: string;
-    onMainButtonClick?: () => void;
 }
 
 /**
@@ -20,20 +16,10 @@ interface TelegramWrapperProps {
  * 텔레그램 미니앱 환경에서 필요한 상단 공간을 확보하고, 메인 버튼 등의 기능을 초기화합니다.
  */
 export default function TelegramWrapper({ 
-    children, 
-    mainButtonText = '시작하기', 
-    onMainButtonClick 
+    children
 }: TelegramWrapperProps) {
     const { initTelegram } = useTelegram();
     const [isMobile, setIsMobile] = useState(false);
-    const [currentPath, setCurrentPath] = useState('');
-
-    // 현재 경로 감지
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setCurrentPath(window.location.pathname);
-        }
-    }, []);
 
     // 모바일 환경 감지 이펙트
     useEffect(() => {
@@ -57,7 +43,7 @@ export default function TelegramWrapper({
         // 텔레그램 API 초기화
         initTelegram();
         
-        // 텔레그램 환경인 경우 메인 버튼 항상 숨기기
+        // 텔레그램 환경인 경우 메인 버튼 숨기기
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
             const tg = window.Telegram.WebApp;
             

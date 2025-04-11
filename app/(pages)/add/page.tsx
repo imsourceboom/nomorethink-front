@@ -7,9 +7,7 @@ import { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import "react-datepicker/dist/react-datepicker.css";
 import TelegramWrapper from '@/app/components/TelegramWrapper';
-import Header from '@/app/components/Header';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
-import { useWallet } from '@/app/hooks/useWallet';
 
 registerLocale('ko', ko);
 
@@ -31,15 +29,6 @@ interface OptionType {
 }
 
 export default function AddPage() {
-    const { 
-        isConnected, 
-        address, 
-        isLoading, 
-        error,
-        handleWalletConnect,
-        resetError
-    } = useWallet();
-
     const [formData, setFormData] = useState({
         exchange: exchangeOptions[0],
         coin: coinOptions[0],
@@ -91,10 +80,7 @@ export default function AddPage() {
 
     return (
         <ErrorBoundary>
-            <TelegramWrapper
-                mainButtonText="설정 완료"
-                onMainButtonClick={handleSubmit}
-            >
+            <TelegramWrapper>
                 <main className="flex flex-col items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
                     <div className="w-full max-w-md mx-auto">
                         <h1 className="text-2xl font-bold mb-8 mt-4">코인 모으기</h1>
