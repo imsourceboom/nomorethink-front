@@ -61,25 +61,23 @@ export default function TelegramWrapper({
     
     // 모바일이면 15%, 아니면 7% 여백 적용
     const headerHeight = isMobile ? '15vh' : '7vh';
-    const contentHeight = isMobile ? '85vh' : '93vh';
 
     return (
-        <div className="relative min-h-screen bg-[var(--bg-color)] text-white">
-            {/* 텔레그램 미니앱 환경에서만 상단 여백 표시 - 고정 위치 */}
+        <>
+            {/* 상단 여백 고정 영역 */}
             {isTelegramWebApp && (
-                <div className="w-full fixed top-0 left-0 z-10" style={{height: headerHeight, backgroundColor: 'var(--bg-color)'}}></div>
+                <div className="fixed top-0 left-0 w-full z-10" style={{height: headerHeight, backgroundColor: 'var(--bg-color)'}} />
             )}
             
-            {/* 스크롤 가능한 콘텐츠 영역 */}
-            <div className="h-screen overflow-y-auto">
-                {/* 상단 여백 공간 (스크롤과 함께 움직이지 않음) */}
+            {/* 상단 여백 더미 영역 - 스크롤 시작점 확보용 */}
+            <div className="flex flex-col min-h-screen bg-[var(--bg-color)] text-white">
                 {isTelegramWebApp && (
-                    <div className="w-full" style={{height: headerHeight}}></div>
+                    <div style={{height: headerHeight}} />
                 )}
                 
-                {/* 실제 콘텐츠 - 스크롤 가능 */}
+                {/* 실제 콘텐츠 */}
                 {children}
             </div>
-        </div>
+        </>
     );
 } 
