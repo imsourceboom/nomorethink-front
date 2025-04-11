@@ -75,8 +75,8 @@ export default function TelegramWrapper({
     const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
     
     // 모바일과 데스크톱에 따른 상단 패딩 값 결정
-    // vh 대신 픽셀 값을 사용하여 더 일관된 결과 제공
-    const paddingTopValue = isMobile ? '70px' : '35px';
+    // 뷰포트 높이(vh) 단위를 사용하여 화면 크기에 반응하도록 설정
+    const paddingTopValue = isMobile ? '15vh' : '7vh';
 
     return (
         <div 
