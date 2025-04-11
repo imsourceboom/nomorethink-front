@@ -39,10 +39,11 @@ export default function TelegramWrapper({
         const info = getPlatformInfo();
         setPlatformInfo(info);
         
-        // 플랫폼 값만 확인하는 alert
+        // window.Telegram.WebApp.platform 값 확인
         if (typeof window !== 'undefined') {
             setTimeout(() => {
-                alert(`platform: "${info.platform}"`);
+                const rawPlatformValue = (window as any).Telegram?.WebApp?.platform || 'undefined';
+                alert(`window.Telegram.WebApp.platform: "${rawPlatformValue}"`);
             }, 1000);
         }
         
