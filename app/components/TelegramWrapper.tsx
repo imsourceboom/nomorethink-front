@@ -43,10 +43,9 @@ export default function TelegramWrapper({
 
     return (
         <div className="min-h-screen bg-[var(--bg-color)] text-white">
-            {/* 텔레그램 미니앱 헤더 공간 확보 (화면의 약 15%) */}
-            <div className="w-full h-[15vh] safe-area-top bg-[var(--bg-color)]"></div>
-            
-            {children}
+            <div className="h-screen pt-[15vh] overflow-y-auto">
+                {children}
+            </div>
         </div>
     );
 } 
