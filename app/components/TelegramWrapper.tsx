@@ -57,25 +57,12 @@ export default function TelegramWrapper({
         // 텔레그램 API 초기화
         initTelegram();
         
-        // 텔레그램 환경인 경우 메인 버튼 설정
+        // 텔레그램 환경인 경우 메인 버튼 항상 숨기기
         if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
             const tg = window.Telegram.WebApp;
             
-            // 현재 경로가 매수 페이지일 때만 버튼 표시
-            const shouldShowButton = currentPath.includes('/add');
-            
-            if (shouldShowButton) {
-                tg.MainButton.text = mainButtonText;
-                tg.MainButton.show();
-                
-                // 메인 버튼 클릭 핸들러 등록
-                if (onMainButtonClick) {
-                    tg.MainButton.onClick(onMainButtonClick);
-                }
-            } else {
-                // 매수 페이지가 아니면 버튼 숨기기
-                tg.MainButton.hide();
-            }
+            // 모든 페이지에서 버튼 숨기기
+            tg.MainButton.hide();
         } else {
             console.warn('Telegram WebApp이 로드되지 않았습니다. 개발 환경에서는 일부 기능이 제한될 수 있습니다.');
         }
@@ -86,7 +73,7 @@ export default function TelegramWrapper({
                 window.Telegram.WebApp.MainButton.hide();
             }
         };
-    }, [initTelegram, mainButtonText, onMainButtonClick, currentPath]);
+    }, [initTelegram]);
 
     // 텔레그램 환경인지 확인
     const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
