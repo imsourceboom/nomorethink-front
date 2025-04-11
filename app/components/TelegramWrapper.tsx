@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTelegram } from '../hooks/useTelegram';
 
 /**
@@ -18,36 +18,24 @@ interface TelegramWrapperProps {
 export default function TelegramWrapper({ 
     children
 }: TelegramWrapperProps) {
-    const { initTelegram } = useTelegram();
+    const { initTelegram, getPlatformInfo } = useTelegram();
     
-    // 초기 마운트 시에는 window 객체에 접근할 수 없으므로 기본값 false 사용
-    const [isMobile, setIsMobile] = useState(false);
-    const [screenWidth, setScreenWidth] = useState(0);
+    // 플랫폼 정보 상태
+    const [platformInfo, setPlatformInfo] = useState({
+        isAndroid: false,
+        isIOS: false,
+        isWeb: false,
+        isMacOS: false,
+        isDesktop: false,
+        platform: 'unknown'
+    });
 
-    // 모바일 환경 감지 이펙트
+    // 초기화 이펙트
     useEffect(() => {
-        // 화면 크기 기반으로 모바일 여부 판단
-        const checkMobile = () => {
-            const width = window.innerWidth;
-            setScreenWidth(width);
-            setIsMobile(width <= 768);
-            
-            // 디버깅용 로그
-            console.log('현재 화면 너비:', width, '모바일 여부:', width <= 768);
-        };
+        // 플랫폼 정보 가져오기
+        const info = getPlatformInfo();
+        setPlatformInfo(info);
         
-        // 초기 체크 및 리사이징 이벤트 리스너 등록
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        
-        // 클린업 함수: 이벤트 리스너 제거
-        return () => {
-            window.removeEventListener('resize', checkMobile);
-        };
-    }, []);
-
-    // 텔레그램 WebApp 초기화 이펙트
-    useEffect(() => {
         // 텔레그램 API 초기화
         initTelegram();
         
@@ -57,28 +45,22 @@ export default function TelegramWrapper({
             
             // 모든 페이지에서 버튼 숨기기
             tg.MainButton.hide();
-        } else {
-            console.warn('Telegram WebApp이 로드되지 않았습니다. 개발 환경에서는 일부 기능이 제한될 수 있습니다.');
         }
         
-        // 클린업 함수: 메인 버튼 숨기기
         return () => {
             if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
                 window.Telegram.WebApp.MainButton.hide();
             }
         };
-    }, [initTelegram]);
+    }, []); // 빈 의존성 배열로 마운트 시 한 번만 실행
 
-    // 텔레그램 환경인지 확인
+    // 텔레그램 웹앱 환경 확인
     const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
     
-    // 모바일과 데스크톱에 따른 상단 패딩 값 결정
-    // screenWidth 값도 사용하여 조건 강화
-    const isMobileDevice = isMobile || (screenWidth > 0 && screenWidth <= 768);
-    const paddingTopValue = isMobileDevice ? '15vh' : '7vh';
-    
-    // 디버깅용 로그
-    console.log('최종 모바일 상태:', isMobileDevice, '적용될 패딩값:', paddingTopValue, '화면 너비:', screenWidth);
+    // platform 값이 android 또는 ios일 때 15vh, 그 외에는 7vh 패딩 적용
+    const paddingTopValue = platformInfo.platform === 'android' || platformInfo.platform === 'ios' 
+        ? '15vh' 
+        : '7vh';
 
     return (
         <div 
