@@ -19,13 +19,21 @@ export default function TelegramWrapper({
     children
 }: TelegramWrapperProps) {
     const { initTelegram } = useTelegram();
+    
+    // 초기 마운트 시에는 window 객체에 접근할 수 없으므로 기본값 false 사용
     const [isMobile, setIsMobile] = useState(false);
+    const [screenWidth, setScreenWidth] = useState(0);
 
     // 모바일 환경 감지 이펙트
     useEffect(() => {
         // 화면 크기 기반으로 모바일 여부 판단
         const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
+            const width = window.innerWidth;
+            setScreenWidth(width);
+            setIsMobile(width <= 768);
+            
+            // 디버깅용 로그
+            console.log('현재 화면 너비:', width, '모바일 여부:', width <= 768);
         };
         
         // 초기 체크 및 리사이징 이벤트 리스너 등록
@@ -65,8 +73,12 @@ export default function TelegramWrapper({
     const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
     
     // 모바일과 데스크톱에 따른 상단 패딩 값 결정
-    // 뷰포트 높이(vh) 단위를 사용하여 화면 크기에 반응하도록 설정
-    const paddingTopValue = isMobile ? '15vh' : '7vh';
+    // screenWidth 값도 사용하여 조건 강화
+    const isMobileDevice = isMobile || (screenWidth > 0 && screenWidth <= 768);
+    const paddingTopValue = isMobileDevice ? '15vh' : '7vh';
+    
+    // 디버깅용 로그
+    console.log('최종 모바일 상태:', isMobileDevice, '적용될 패딩값:', paddingTopValue, '화면 너비:', screenWidth);
 
     return (
         <div 
