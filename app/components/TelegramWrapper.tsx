@@ -39,23 +39,10 @@ export default function TelegramWrapper({
         const info = getPlatformInfo();
         setPlatformInfo(info);
         
-        // 플랫폼 정보 확인을 위한 alert
+        // 플랫폼 값만 확인하는 alert
         if (typeof window !== 'undefined') {
             setTimeout(() => {
-                alert(`플랫폼 정보:
-- platform: ${info.platform}
-- rawPlatform: ${info.rawPlatform}
-- isAndroid: ${info.isAndroid}
-- isIOS: ${info.isIOS}
-- isWeb: ${info.isWeb}
-- isMacOS: ${info.isMacOS}
-- isDesktop: ${info.isDesktop}
-- hasTelegram: ${info.hasTelegram}
-- hasWebApp: ${info.hasWebApp}
-- User-Agent: ${navigator.userAgent}
-- window.Telegram: ${typeof (window as any).Telegram !== 'undefined'}
-- paddingTopValue: ${info.platform === 'android' || info.platform === 'ios' ? '15vh' : '7vh'}
-                `);
+                alert(`platform: "${info.platform}"`);
             }, 1000);
         }
         
