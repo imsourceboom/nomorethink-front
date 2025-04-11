@@ -75,8 +75,8 @@ export default function Home() {
   return (
     <Template>
       <div className="w-full h-full min-h-screen bg-[#202124] text-white overflow-y-auto">
-        {/* 텔레그램 미니앱 헤더 공간 확보 */}
-        <div className="w-full h-12 safe-area-top bg-[#202124]"></div>
+        {/* 텔레그램 미니앱 헤더 공간 확보 (화면의 약 25%) */}
+        <div className="w-full h-[25vh] safe-area-top bg-[#202124]"></div>
         
         {/* 메인 콘텐츠 */}
         <div className="max-w-md mx-auto p-4 pb-24">
