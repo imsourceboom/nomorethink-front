@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Template from './components/Template';
-import { useWallet } from './hooks/useWallet';
 
 // 코인 아이콘 컴포넌트
 const CoinIcon = ({ symbol }: { symbol: string }) => {
@@ -37,9 +36,9 @@ interface CoinData {
 }
 
 export default function Home() {
-  const [formattedTotalAssets, setFormattedTotalAssets] = useState('999,999,999,999');
+  const [formattedTotalAssets] = useState('999,999,999,999');
   
-  const [coins, setCoins] = useState<CoinData[]>([
+  const [coins] = useState<CoinData[]>([
     {
       symbol: 'BTC',
       name: '비트코인',
