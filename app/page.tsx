@@ -118,7 +118,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">보유수량</span>
-                    <span>{coin.holdings.toFixed(8)} BTC</span>
+                    <span>{coin.holdings.toFixed(8)} {coin.symbol}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">평가금액</span>
