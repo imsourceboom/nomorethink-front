@@ -70,17 +70,12 @@ export default function TelegramWrapper({
                 <div className="w-full fixed top-0 left-0 z-10" style={{height: headerHeight, backgroundColor: 'var(--bg-color)'}}></div>
             )}
             
-            {/* 텔레그램 환경여부에 따라 다른 높이 적용 */}
-            <div className={`${isTelegramWebApp ? '' : 'h-screen'} overflow-y-auto`}>
-                {/* 상단 여백 공간 (스크롤되지 않음) */}
-                {isTelegramWebApp && (
-                    <div className="w-full" style={{height: headerHeight}}></div>
-                )}
-                
-                {/* 실제 콘텐츠 영역 (스크롤됨) */}
-                <div className={isTelegramWebApp ? '' : 'h-full'}>
-                    {children}
-                </div>
+            {/* 스크롤 가능한 콘텐츠 영역 */}
+            <div className="overflow-y-auto" style={{
+                height: isTelegramWebApp ? '100vh' : '100vh',
+                paddingTop: isTelegramWebApp ? headerHeight : '0'
+            }}>
+                {children}
             </div>
         </div>
     );
