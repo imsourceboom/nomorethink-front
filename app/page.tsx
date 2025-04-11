@@ -1,122 +1,163 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Template from './components/Template';
 import { useWallet } from './hooks/useWallet';
 
+// 코인 아이콘 컴포넌트
+const CoinIcon = ({ symbol }: { symbol: string }) => {
+  let iconClass = 'w-8 h-8 rounded-full flex items-center justify-center text-white';
+  
+  if (symbol === 'BTC') {
+    iconClass += ' bg-[#F7931A]';
+  } else if (symbol === 'ETH') {
+    iconClass += ' bg-[#627EEA]';
+  } else if (symbol === 'TON') {
+    iconClass += ' bg-[#0088CC]';
+  } else {
+    iconClass += ' bg-gray-500';
+  }
+  
+  return (
+    <div className={iconClass}>
+      {symbol.substring(0, 1)}
+    </div>
+  );
+};
+
+interface CoinData {
+  symbol: string;
+  name: string;
+  currentPrice: number;
+  priceChange: number;
+  changePercent: number;
+  holdings: number;
+  holdingsValue: number;
+  purchaseValue: number;
+}
+
 export default function Home() {
-    const { totalAssets } = useWallet();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [formattedTotalAssets, setFormattedTotalAssets] = useState('999,999,999,999');
+  
+  const [coins, setCoins] = useState<CoinData[]>([
+    {
+      symbol: 'BTC',
+      name: '비트코인',
+      currentPrice: 116323952,
+      priceChange: 999999999,
+      changePercent: 99.99,
+      holdings: 9.9991234234,
+      holdingsValue: 9999999,
+      purchaseValue: 999999999
+    },
+    {
+      symbol: 'ETH',
+      name: '이더리움',
+      currentPrice: 116323952,
+      priceChange: 999999999,
+      changePercent: 99.99,
+      holdings: 9.9991234234,
+      holdingsValue: 9999999,
+      purchaseValue: 999999999
+    },
+    {
+      symbol: 'TON',
+      name: '톤코인',
+      currentPrice: 116323952,
+      priceChange: 999999999,
+      changePercent: 99.99,
+      holdings: 9.9991234234,
+      holdingsValue: 9999999,
+      purchaseValue: 999999999
+    }
+  ]);
 
-    return (
-        <Template>
-            <div className="w-full h-full min-h-screen bg-primary text-white overflow-y-auto">
-                <div className="max-w-md mx-auto pt-[20vh] p-4 pb-24 space-y-6">
-                    {/* 기존 섹션들 */}
-                    <section className="bg-secondary rounded-lg p-4">
-                        <h2 className="text-lg font-semibold mb-4">자산 현황</h2>
-                        <div className="space-y-4">
-                            <div className="flex justify-between items-center">
-                                <span>총 자산</span>
-                                <span className="font-bold">₩{totalAssets.totalValue.toLocaleString()}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span>24시간 변동</span>
-                                <span className={`text-${totalAssets.change24h >= 0 ? 'green-500' : 'red-500'}`}>
-                                    {totalAssets.change24h >= 0 ? '+' : ''}₩{Math.abs(totalAssets.change24h).toLocaleString()} ({Math.abs(totalAssets.change24h).toFixed(2)}%)
-                                </span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="bg-secondary rounded-lg p-4">
-                        <h2 className="text-lg font-semibold mb-4">보유 자산</h2>
-                        <div className="space-y-4">
-                            {totalAssets.assets.map((asset) => (
-                                <div key={asset.symbol} className="flex justify-between items-center">
-                                    <div className="flex items-center space-x-2">
-                                        <span className={`w-8 h-8 ${asset.change24h >= 0 ? 'bg-green-500' : 'bg-red-500'} rounded-full flex items-center justify-center`}>
-                                            {asset.symbol.toUpperCase()}
-                                        </span>
-                                        <div>
-                                            <div>{asset.symbol}</div>
-                                            <div className="text-sm text-gray-400">{asset.amount} {asset.symbol}</div>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="font-bold">₩{asset.value.toLocaleString()}</div>
-                                        <div className={`text-sm ${asset.change24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                            {asset.change24h >= 0 ? '+' : ''}{asset.change24h}%
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* 추가 섹션들 */}
-                    <section className="bg-secondary rounded-lg p-4">
-                        <h2 className="text-lg font-semibold mb-4">최근 거래</h2>
-                        <div className="space-y-4">
-                            {[...Array(5)].map((_, i) => (
-                                <div key={i} className="flex justify-between items-center">
-                                    <div className="flex items-center space-x-2">
-                                        <span className={`w-8 h-8 ${i % 2 === 0 ? 'bg-green-500' : 'bg-red-500'} rounded-full flex items-center justify-center`}>
-                                            {i % 2 === 0 ? '매수' : '매도'}
-                                        </span>
-                                        <div>
-                                            <div>비트코인</div>
-                                            <div className="text-sm text-gray-400">2024-03-{String(i + 1).padStart(2, '0')}</div>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="font-bold">₩{(1000000 + i * 100000).toLocaleString()}</div>
-                                        <div className="text-sm text-gray-400">0.0{i + 1} BTC</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section className="bg-secondary rounded-lg p-4">
-                        <h2 className="text-lg font-semibold mb-4">시장 동향</h2>
-                        <div className="space-y-4">
-                            {[...Array(5)].map((_, i) => (
-                                <div key={i} className="flex justify-between items-center">
-                                    <div className="flex items-center space-x-2">
-                                        <span className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                                            {String.fromCharCode(65 + i)}
-                                        </span>
-                                        <div>
-                                            <div>코인 {String.fromCharCode(65 + i)}</div>
-                                            <div className="text-sm text-gray-400">24시간 거래량: ₩{(1000000000 + i * 100000000).toLocaleString()}</div>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="font-bold">₩{(100000 + i * 10000).toLocaleString()}</div>
-                                        <div className={`text-sm ${i % 2 === 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                            {i % 2 === 0 ? '+' : '-'}{(1 + i * 0.5).toFixed(2)}%
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section className="bg-secondary rounded-lg p-4">
-                        <h2 className="text-lg font-semibold mb-4">뉴스</h2>
-                        <div className="space-y-4">
-                            {[...Array(5)].map((_, i) => (
-                                <div key={i} className="space-y-2">
-                                    <div className="font-semibold">암호화폐 시장 {i + 1}월 동향 분석</div>
-                                    <div className="text-sm text-gray-400">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    </div>
-                                    <div className="text-sm text-blue-400">자세히 보기 →</div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                </div>
+  return (
+    <Template>
+      <div className="w-full h-full min-h-screen bg-[#202124] text-white overflow-y-auto">
+        {/* 상단 네비게이션 바 */}
+        <div className="sticky top-0 bg-[#202124] z-10 p-4 flex items-center justify-between">
+          <button className="bg-[#3C4043] text-white px-4 py-2 rounded-full flex items-center">
+            <span className="mr-1">✕</span>
+            <span>닫기</span>
+          </button>
+          <div className="flex items-center">
+            <button className="bg-[#3C4043] text-white p-2 rounded-full mr-2">
+              <span>✓</span>
+            </button>
+            <button className="bg-[#3C4043] text-white p-2 rounded-full" onClick={() => setShowDropdown(!showDropdown)}>
+              <span>⋯</span>
+            </button>
+            {showDropdown && (
+              <div className="absolute top-16 right-4 bg-[#3C4043] rounded-lg shadow-lg p-2">
+                <div className="p-2 hover:bg-[#4E5256] rounded">새로고침</div>
+                <div className="p-2 hover:bg-[#4E5256] rounded">설정</div>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* 메인 콘텐츠 */}
+        <div className="max-w-md mx-auto p-4 pb-24">
+          {/* 총 보유자산 섹션 */}
+          <div className="mb-6">
+            <div className="flex items-center text-lg mb-2">
+              <h2 className="mr-2">총 보유자산</h2>
+              <button className="text-gray-400">
+                <span>▼ KRW</span>
+              </button>
             </div>
-        </Template>
-    );
+            <div className="text-5xl font-bold mb-6">{formattedTotalAssets}</div>
+          </div>
+          
+          {/* 코인 리스트 */}
+          <div className="space-y-4">
+            {coins.map((coin) => (
+              <div key={coin.symbol} className="bg-[#292A2D] rounded-lg p-4">
+                <div className="flex justify-between items-center mb-4">
+                  <div className="flex items-center">
+                    <CoinIcon symbol={coin.symbol} />
+                    <div className="ml-3">
+                      <div className="font-semibold">{coin.name} ({coin.symbol})</div>
+                    </div>
+                  </div>
+                  <div className="text-right font-semibold">
+                    {coin.currentPrice.toLocaleString()} KRW
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-x-2 gap-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">평가손익</span>
+                    <span className="text-red-500">+{coin.priceChange.toLocaleString()} KRW</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">수익률</span>
+                    <span className="text-red-500">{coin.changePercent.toFixed(2)} %</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">보유수량</span>
+                    <span>{coin.holdings.toFixed(8)} BTC</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">평가금액</span>
+                    <span>{coin.holdingsValue.toLocaleString()} KRW</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">매수평균가</span>
+                    <span>{coin.purchaseValue.toLocaleString()} KRW</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">매수금액</span>
+                    <span>{(coin.holdings * coin.purchaseValue).toLocaleString()} KRW</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Template>
+  );
 }

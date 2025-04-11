@@ -11,13 +11,13 @@
   --secondary-bg-color: #292A2D;
   --accent-color: #3366FF;
   --input-border-color: #2D3748;
-  --tg-bg-color: #0E1621;
+  --tg-bg-color: #202124;
   --tg-text-color: #ffffff;
   --tg-hint-color: #999999;
   --tg-link-color: #2481cc;
-  --tg-button-color: #2481cc;
+  --tg-button-color: #3C4043;
   --tg-button-text-color: #ffffff;
-  --tg-secondary-bg-color: #17212B;
+  --tg-secondary-bg-color: #292A2D;
 
   /* 애니메이션 설정 */
   --tg-animation-duration: 200ms;
@@ -92,6 +92,14 @@ html, body {
     transition: all var(--tg-animation-duration) var(--tg-animation-timing);
   }
   
+  /* 둥근 버튼 */
+  .tg-round-button {
+    @apply p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-opacity-50;
+    background-color: var(--tg-button-color);
+    color: var(--tg-button-text-color);
+    transition: all var(--tg-animation-duration) var(--tg-animation-timing);
+  }
+  
   /* 입력 필드 */
   .tg-input {
     @apply w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50;
@@ -125,6 +133,12 @@ html, body {
     background-color: var(--tg-secondary-bg-color);
     @apply rounded-lg p-4 mb-4;
     animation: tg-fade var(--tg-animation-duration) var(--tg-animation-timing);
+  }
+
+  /* 코인 카드 */
+  .coin-card {
+    background-color: var(--tg-secondary-bg-color);
+    @apply rounded-lg p-4 mb-4;
   }
 
   /* 애니메이션 유틸리티 클래스 */
