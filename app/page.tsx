@@ -77,7 +77,7 @@ export default function Home() {
       <TelegramWrapper>
         <div className="w-full bg-[#202124] text-white">
           {/* 메인 콘텐츠 */}
-          <div className="max-w-md mx-auto p-4 pb-32">
+          <div className="max-w-md mx-auto p-4 pb-24">
             {/* 총 보유자산 섹션 */}
             <div className="mb-10">
               <div className="flex items-center text-lg mb-3">

@@ -95,7 +95,7 @@ export default function AddPage() {
                 mainButtonText="설정 완료"
                 onMainButtonClick={handleSubmit}
             >
-                <main className="flex flex-col items-center justify-start px-4 pb-32 bg-[var(--bg-color)]">
+                <main className="flex flex-col items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
                     <div className="w-full max-w-md mx-auto">
                         <Header 
                             isConnected={isConnected}

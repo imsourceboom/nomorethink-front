@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTelegram } from '../hooks/useTelegram';
 
 interface TelegramWrapperProps {
@@ -15,6 +15,21 @@ export default function TelegramWrapper({
     onMainButtonClick 
 }: TelegramWrapperProps) {
     const { initTelegram } = useTelegram();
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        // 모바일 환경 감지
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+        };
+    }, []);
 
     useEffect(() => {
         // 텔레그램 WebApp 초기화
@@ -43,17 +58,29 @@ export default function TelegramWrapper({
 
     // 텔레그램 환경인지 확인
     const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
+    
+    // 모바일이면 15%, 아니면 7% 여백 적용
+    const headerHeight = isMobile ? '15vh' : '7vh';
+    const contentHeight = isMobile ? '85vh' : '93vh';
 
     return (
         <div className="min-h-screen bg-[var(--bg-color)] text-white">
             {/* 텔레그램 미니앱 환경에서만 상단 여백 표시 */}
             {isTelegramWebApp && (
-                <div className="w-full h-[15vh] bg-[var(--bg-color)]"></div>
+                <div className="w-full fixed top-0 left-0 z-10" style={{height: headerHeight, backgroundColor: 'var(--bg-color)'}}></div>
             )}
             
             {/* 텔레그램 환경여부에 따라 다른 높이 적용 */}
-            <div className={`${isTelegramWebApp ? 'h-[85vh]' : 'h-screen'} overflow-y-auto`}>
-                {children}
+            <div className={`${isTelegramWebApp ? '' : 'h-screen'} overflow-y-auto`}>
+                {/* 상단 여백 공간 (스크롤되지 않음) */}
+                {isTelegramWebApp && (
+                    <div className="w-full" style={{height: headerHeight}}></div>
+                )}
+                
+                {/* 실제 콘텐츠 영역 (스크롤됨) */}
+                <div className={isTelegramWebApp ? '' : 'h-full'}>
+                    {children}
+                </div>
             </div>
         </div>
     );
