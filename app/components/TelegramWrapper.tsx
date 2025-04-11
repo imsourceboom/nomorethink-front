@@ -64,17 +64,20 @@ export default function TelegramWrapper({
     const contentHeight = isMobile ? '85vh' : '93vh';
 
     return (
-        <div className="min-h-screen bg-[var(--bg-color)] text-white">
-            {/* 텔레그램 미니앱 환경에서만 상단 여백 표시 */}
+        <div className="relative min-h-screen bg-[var(--bg-color)] text-white">
+            {/* 텔레그램 미니앱 환경에서만 상단 여백 표시 - 고정 위치 */}
             {isTelegramWebApp && (
                 <div className="w-full fixed top-0 left-0 z-10" style={{height: headerHeight, backgroundColor: 'var(--bg-color)'}}></div>
             )}
             
             {/* 스크롤 가능한 콘텐츠 영역 */}
-            <div className="overflow-y-auto" style={{
-                height: isTelegramWebApp ? '100vh' : '100vh',
-                paddingTop: isTelegramWebApp ? headerHeight : '0'
-            }}>
+            <div className="h-screen overflow-y-auto">
+                {/* 상단 여백 공간 (스크롤과 함께 움직이지 않음) */}
+                {isTelegramWebApp && (
+                    <div className="w-full" style={{height: headerHeight}}></div>
+                )}
+                
+                {/* 실제 콘텐츠 - 스크롤 가능 */}
                 {children}
             </div>
         </div>
