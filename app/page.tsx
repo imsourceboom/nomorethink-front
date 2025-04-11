@@ -97,8 +97,8 @@ export default function Home() {
           {/* 코인 리스트 */}
           <div className="space-y-4">
             {coins.map((coin) => (
-              <div key={coin.symbol} className="bg-[#292A2D] rounded-lg p-4">
-                <div className="flex justify-between items-center mb-4">
+              <div key={coin.symbol} className="bg-[#292A2D] rounded-[20px] p-6 border border-[#3C4043]">
+                <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center">
                     <CoinIcon symbol={coin.symbol} />
                     <div className="ml-3">
@@ -110,7 +110,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-x-2 gap-y-3">
+                <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-400">평가손익</span>
                     <span className="text-red-500">+{coin.priceChange.toLocaleString()} KRW</span>
