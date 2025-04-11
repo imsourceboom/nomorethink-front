@@ -81,14 +81,17 @@ export default function Home() {
         {/* 메인 콘텐츠 */}
         <div className="max-w-md mx-auto p-4 pb-24">
           {/* 총 보유자산 섹션 */}
-          <div className="mb-6">
-            <div className="flex items-center text-lg mb-2">
-              <h2 className="mr-2">총 보유자산</h2>
-              <button className="text-gray-400">
-                <span>▼ KRW</span>
+          <div className="mb-10">
+            <div className="flex items-center text-lg mb-4">
+              <h2 className="mr-3">총 보유자산</h2>
+              <button className="text-gray-400 flex items-center">
+                <span className="text-sm mr-1">KRW</span>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </button>
             </div>
-            <div className="text-5xl font-bold mb-6">{formattedTotalAssets}</div>
+            <div className="text-4xl font-bold mb-6">{formattedTotalAssets}</div>
           </div>
           
           {/* 코인 리스트 */}
