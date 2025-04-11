@@ -97,16 +97,7 @@ export default function AddPage() {
             >
                 <main className="flex flex-col items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
                     <div className="w-full max-w-md mx-auto">
-                        <Header 
-                            isConnected={isConnected}
-                            address={address}
-                            isLoading={isLoading}
-                            error={error}
-                            onWalletConnect={handleWalletConnect}
-                            resetError={resetError}
-                        />
-
-                        <h1 className="text-2xl font-bold mb-8">코인 모으기 설정</h1>
+                        <h1 className="text-2xl font-bold mb-8 mt-4">코인 모으기</h1>
 
                         <form onSubmit={(e) => {
                             e.preventDefault();
