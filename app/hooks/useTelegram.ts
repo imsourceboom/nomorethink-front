@@ -2,6 +2,8 @@
 
 import { useState, useCallback } from 'react';
 
+// TelegramWebApp 인터페이스는 TelegramWrapper.tsx에서 전역으로 선언되어 있으므로 생략
+
 export const useTelegram = () => {
     const [, setIsReady] = useState(false);
 
@@ -14,7 +16,7 @@ export const useTelegram = () => {
     // 텔레그램 미니앱 환경인지 확인하는 함수
     const isTelegramMiniApp = useCallback(() => {
         if (typeof window === 'undefined') return false;
-        if (!(window as any).Telegram || !(window as any).Telegram.WebApp) return false;
+        if (!window.Telegram || !window.Telegram.WebApp) return false;
         
         return true;
     }, []);
@@ -22,10 +24,10 @@ export const useTelegram = () => {
     // Telegram WebApp SDK를 위한 커스텀 훅
     const initTelegram = useCallback(() => {
         if (typeof window === 'undefined') return;
-        if (!(window as any).Telegram) return;
-        if (!(window as any).Telegram.WebApp) return;
+        if (!window.Telegram) return;
+        if (!window.Telegram.WebApp) return;
 
-        const tg = (window as any).Telegram.WebApp;
+        const tg = window.Telegram.WebApp;
         
         try {
             // Telegram WebApp 초기화
@@ -33,7 +35,7 @@ export const useTelegram = () => {
             setIsReady(true);
             
             // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
-            if (isMobileDevice() && (window as any).Telegram.WebApp) {
+            if (isMobileDevice() && window.Telegram.WebApp) {
                 tg.expand();
                 
                 // 텔레그램 미니앱 환경에서만 requestFullscreen 실행
@@ -71,10 +73,10 @@ export const useTelegram = () => {
     const handleMainButtonClick = useCallback(() => {
         try {
             if (typeof window === 'undefined') return;
-            if (!(window as any).Telegram) return;
-            if (!(window as any).Telegram.WebApp) return;
+            if (!window.Telegram) return;
+            if (!window.Telegram.WebApp) return;
 
-            const tg = (window as any).Telegram.WebApp;
+            const tg = window.Telegram.WebApp;
             tg.MainButton.onClick(() => {
                 // 클릭 이벤트 처리
             });
