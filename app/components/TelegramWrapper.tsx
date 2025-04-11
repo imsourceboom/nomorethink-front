@@ -79,22 +79,14 @@ export default function TelegramWrapper({
     const paddingTopValue = isMobile ? '70px' : '35px';
 
     return (
-        <div className="min-h-screen bg-[var(--bg-color)] text-white relative">
-            {/* 텔레그램 미니앱 환경일 경우에만 상단 공간 확보를 위한 고정 헤더 */}
-            {isTelegramWebApp && (
-                <div 
-                    className="w-full fixed top-0 left-0 z-10"
-                    style={{ height: paddingTopValue, backgroundColor: 'var(--bg-color)' }}
-                />
-            )}
-            
+        <div 
+            className="min-h-screen bg-[var(--bg-color)] text-white"
+            style={{ 
+                paddingTop: isTelegramWebApp ? paddingTopValue : '0'
+            }}
+        >
             {/* 스크롤 가능한 콘텐츠 영역 */}
-            <div 
-                className="w-full overflow-auto"
-                style={{ paddingTop: isTelegramWebApp ? paddingTopValue : '0' }}
-            >
-                {children}
-            </div>
+            {children}
         </div>
     );
 } 
