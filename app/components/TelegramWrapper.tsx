@@ -59,25 +59,18 @@ export default function TelegramWrapper({
     // 텔레그램 환경인지 확인
     const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
     
-    // 모바일이면 15%, 아니면 7% 여백 적용
-    const headerHeight = isMobile ? '15vh' : '7vh';
+    // 모바일이면 15%, 아니면 7% 패딩 적용
+    const paddingTopValue = isMobile ? '15%' : '7%';
 
     return (
-        <>
-            {/* 상단 여백 고정 영역 */}
-            {isTelegramWebApp && (
-                <div className="fixed top-0 left-0 w-full z-10" style={{height: headerHeight, backgroundColor: 'var(--bg-color)'}} />
-            )}
+        <div 
+            className="min-h-screen bg-[var(--bg-color)] text-white" 
+            style={{ paddingTop: isTelegramWebApp ? paddingTopValue : '0' }}
+        >
+            {/* 텔레그램 미니앱 헤더 공간 확보 (화면의 약 15%) */}
+            {/* <div className="w-full h-[15vh] bg-[var(--bg-color)]"></div> */}
             
-            {/* 상단 여백 더미 영역 - 스크롤 시작점 확보용 */}
-            <div className="flex flex-col min-h-screen bg-[var(--bg-color)] text-white">
-                {isTelegramWebApp && (
-                    <div style={{height: headerHeight}} />
-                )}
-                
-                {/* 실제 콘텐츠 */}
-                {children}
-            </div>
-        </>
+            {children}
+        </div>
     );
 } 
