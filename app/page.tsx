@@ -37,7 +37,6 @@ interface CoinData {
 }
 
 export default function Home() {
-  const [showDropdown, setShowDropdown] = useState(false);
   const [formattedTotalAssets, setFormattedTotalAssets] = useState('999,999,999,999');
   
   const [coins, setCoins] = useState<CoinData[]>([
@@ -76,27 +75,8 @@ export default function Home() {
   return (
     <Template>
       <div className="w-full h-full min-h-screen bg-[#202124] text-white overflow-y-auto">
-        {/* 상단 네비게이션 바 */}
-        <div className="sticky top-0 bg-[#202124] z-10 p-4 flex items-center justify-between">
-          <button className="bg-[#3C4043] text-white px-4 py-2 rounded-full flex items-center">
-            <span className="mr-1">✕</span>
-            <span>닫기</span>
-          </button>
-          <div className="flex items-center">
-            <button className="bg-[#3C4043] text-white p-2 rounded-full mr-2">
-              <span>✓</span>
-            </button>
-            <button className="bg-[#3C4043] text-white p-2 rounded-full" onClick={() => setShowDropdown(!showDropdown)}>
-              <span>⋯</span>
-            </button>
-            {showDropdown && (
-              <div className="absolute top-16 right-4 bg-[#3C4043] rounded-lg shadow-lg p-2">
-                <div className="p-2 hover:bg-[#4E5256] rounded">새로고침</div>
-                <div className="p-2 hover:bg-[#4E5256] rounded">설정</div>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* 텔레그램 미니앱 헤더 공간 확보 */}
+        <div className="w-full h-12 safe-area-top bg-[#202124]"></div>
         
         {/* 메인 콘텐츠 */}
         <div className="max-w-md mx-auto p-4 pb-24">
