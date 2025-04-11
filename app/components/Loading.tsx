@@ -12,11 +12,8 @@ export default function Loading() {
             setIsVisible(false);
         }, 3000);
 
-        // 로딩 중에는 FloatingMenu 숨기기
-        document.body.style.overflow = 'hidden';
         return () => {
             clearTimeout(timer);
-            document.body.style.overflow = 'unset';
         };
     }, []);
 
