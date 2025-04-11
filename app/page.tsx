@@ -53,8 +53,8 @@ export default function Home() {
       symbol: 'ETH',
       name: '이더리움',
       currentPrice: 116323952,
-      priceChange: 999999999,
-      changePercent: 99.99,
+      priceChange: -999999999,
+      changePercent: -99.99,
       holdings: 9.9991234234,
       holdingsValue: 9999999,
       purchaseValue: 999999999
@@ -81,7 +81,7 @@ export default function Home() {
         <div className="max-w-md mx-auto p-4 pb-24">
           {/* 총 보유자산 섹션 */}
           <div className="mb-10">
-            <div className="flex items-center text-lg mb-4">
+            <div className="flex items-center text-lg mb-3">
               <h2 className="mr-3">총 보유자산</h2>
               <button className="text-gray-400 flex items-center">
                 <span className="text-sm mr-1">KRW</span>
@@ -112,11 +112,15 @@ export default function Home() {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-400">평가손익</span>
-                    <span className="text-red-500">+{coin.priceChange.toLocaleString()} KRW</span>
+                    <span className={coin.priceChange >= 0 ? "text-red-500" : "text-blue-500"}>
+                      {coin.priceChange >= 0 ? '+' : '-'}{Math.abs(coin.priceChange).toLocaleString()} KRW
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">수익률</span>
-                    <span className="text-red-500">{coin.changePercent.toFixed(2)} %</span>
+                    <span className={coin.changePercent >= 0 ? "text-red-500" : "text-blue-500"}>
+                      {coin.changePercent >= 0 ? '+' : '-'}{Math.abs(coin.changePercent).toFixed(2)} %
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">보유수량</span>
