@@ -18,34 +18,22 @@ interface TelegramWrapperProps {
 export default function TelegramWrapper({ 
     children
 }: TelegramWrapperProps) {
-    const { initTelegram, getPlatformInfo } = useTelegram();
+    const { initTelegram } = useTelegram();
     
-    // 플랫폼 정보 상태
-    const [platformInfo, setPlatformInfo] = useState({
-        isAndroid: false,
-        isIOS: false,
-        isWeb: false,
-        isMacOS: false,
-        isDesktop: false,
-        platform: 'unknown',
-        rawPlatform: '',
-        hasTelegram: false,
-        hasWebApp: false
-    });
+    // 모바일 감지를 위한 상태
+    const [isMobile, setIsMobile] = useState(false);
 
-    // 초기화 이펙트
+    // 환경 감지 이펙트
     useEffect(() => {
-        // 플랫폼 정보 가져오기
-        const info = getPlatformInfo();
-        setPlatformInfo(info);
+        // 모바일 기기 감지
+        const detectMobile = () => {
+            if (typeof navigator === 'undefined') return;
+            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            setIsMobile(isMobileDevice);
+        };
         
-        // window.Telegram.WebApp.platform 값 확인
-        if (typeof window !== 'undefined') {
-            setTimeout(() => {
-                const rawPlatformValue = (window as any).Telegram?.WebApp?.platform || 'undefined';
-                alert(`window.Telegram.WebApp.platform: "${rawPlatformValue}"`);
-            }, 1000);
-        }
+        // 모바일 여부 확인
+        detectMobile();
         
         // 텔레그램 API 초기화
         initTelegram();
@@ -69,10 +57,8 @@ export default function TelegramWrapper({
     // 텔레그램 웹앱 환경 확인
     const isTelegramWebApp = typeof window !== 'undefined' && !!(window as any).Telegram?.WebApp;
     
-    // platform 값이 android 또는 ios일 때 15vh, 그 외에는 7vh 패딩 적용
-    const paddingTopValue = platformInfo.platform === 'android' || platformInfo.platform === 'ios' 
-        ? '15vh' 
-        : '7vh';
+    // 모바일에서는 15vh, 데스크톱에서는 7vh 패딩 적용
+    const paddingTopValue = isMobile ? '15vh' : '7vh';
 
     return (
         <div 
