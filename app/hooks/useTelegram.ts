@@ -13,19 +13,31 @@ export const useTelegram = () => {
     
     // 텔레그램 플랫폼 정보 확인
     const getPlatformInfo = useCallback(() => {
-        if (typeof window === 'undefined' || !window.Telegram?.WebApp?.platform) {
-            return {
-                isAndroid: false,
-                isIOS: false,
-                isWeb: false,
-                isMacOS: false,
-                isDesktop: false,
-                platform: 'unknown'
-            };
+        const defaultInfo = {
+            isAndroid: false,
+            isIOS: false,
+            isWeb: false,
+            isMacOS: false,
+            isDesktop: false,
+            platform: 'unknown',
+            rawPlatform: 'undefined',
+            hasTelegram: false,
+            hasWebApp: false
+        };
+        
+        if (typeof window === 'undefined') {
+            return defaultInfo;
         }
         
+        // Telegram 및 WebApp 객체 존재 여부 확인
+        const hasTelegram = typeof window !== 'undefined' && typeof (window as any).Telegram !== 'undefined';
+        const hasWebApp = hasTelegram && typeof (window as any).Telegram?.WebApp !== 'undefined';
+        const rawPlatform = hasWebApp && (window as any).Telegram?.WebApp?.platform 
+            ? (window as any).Telegram.WebApp.platform 
+            : '';
+        
         // platform 정보 가져오기 (android, ios, web, macos 등)
-        const platform = window.Telegram.WebApp.platform || '';
+        const platform = rawPlatform;
         
         return {
             isAndroid: platform.includes('android'),
@@ -35,26 +47,29 @@ export const useTelegram = () => {
             // 데스크톱 환경 (웹, 맥, 윈도우, 리눅스 등)
             isDesktop: platform.includes('web') || platform.includes('macos') || 
                        platform.includes('windows') || platform.includes('linux'),
-            platform
+            platform,
+            rawPlatform,
+            hasTelegram,
+            hasWebApp
         };
     }, []);
 
     // 텔레그램 미니앱 환경인지 확인하는 함수
     const isTelegramMiniApp = useCallback(() => {
         if (typeof window === 'undefined') return false;
-        if (!window.Telegram || !window.Telegram.WebApp) return false;
+        if (!(window as any).Telegram || !(window as any).Telegram.WebApp) return false;
         
         // 텔레그램 WebApp 플랫폼 확인 (platform 속성이 있으면 실제 텔레그램 환경)
-        return !!window.Telegram.WebApp.platform;
+        return !!(window as any).Telegram.WebApp.platform;
     }, []);
 
     // Telegram WebApp SDK를 위한 커스텀 훅
     const initTelegram = useCallback(() => {
         if (typeof window === 'undefined') return;
-        if (!window.Telegram) return;
-        if (!window.Telegram.WebApp) return;
+        if (!(window as any).Telegram) return;
+        if (!(window as any).Telegram.WebApp) return;
 
-        const tg = window.Telegram.WebApp;
+        const tg = (window as any).Telegram.WebApp;
         
         try {
             // Telegram WebApp 초기화
@@ -65,14 +80,14 @@ export const useTelegram = () => {
             const platformInfo = getPlatformInfo();
             
             // 모바일 디바이스이고 텔레그램 웹앱인 경우에만 실행
-            if ((platformInfo.isAndroid || platformInfo.isIOS) && window.Telegram.WebApp) {
+            if ((platformInfo.isAndroid || platformInfo.isIOS) && (window as any).Telegram.WebApp) {
                 tg.expand();
                 
                 // 텔레그램 미니앱 환경에서만 requestFullscreen 실행
                 if (isTelegramMiniApp() && typeof tg.requestFullscreen === 'function') {
                     try {
                         tg.requestFullscreen();
-                    } catch (error) {
+                    } catch {
                         // 오류 무시
                     }
                 }
@@ -82,7 +97,7 @@ export const useTelegram = () => {
                     if (typeof tg.disableVerticalSwipes === 'function') {
                         tg.disableVerticalSwipes();
                     }
-                } catch (error) {
+                } catch {
                     // 오류 무시
                 }
                 
@@ -91,11 +106,11 @@ export const useTelegram = () => {
                     if (typeof tg.enableClosingConfirmation === 'function') {
                         tg.enableClosingConfirmation();
                     }
-                } catch (error) {
+                } catch {
                     // 오류 무시
                 }
             }
-        } catch (error) {
+        } catch {
             // 오류 무시
         }
     }, [getPlatformInfo, isTelegramMiniApp]);
@@ -103,14 +118,14 @@ export const useTelegram = () => {
     const handleMainButtonClick = useCallback(() => {
         try {
             if (typeof window === 'undefined') return;
-            if (!window.Telegram) return;
-            if (!window.Telegram.WebApp) return;
+            if (!(window as any).Telegram) return;
+            if (!(window as any).Telegram.WebApp) return;
 
-            const tg = window.Telegram.WebApp;
+            const tg = (window as any).Telegram.WebApp;
             tg.MainButton.onClick(() => {
                 // 클릭 이벤트 처리
             });
-        } catch (error) {
+        } catch {
             // 오류 무시
         }
     }, []);
