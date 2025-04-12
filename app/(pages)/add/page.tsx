@@ -12,8 +12,8 @@ import ErrorBoundary from '@/app/components/ErrorBoundary';
 registerLocale('ko', ko);
 
 const exchangeOptions = [
-    { value: 'upbit', label: '업비트' },
-    { value: 'bithumb', label: '빗썸' }
+    { value: 'bithumb', label: '빗썸' },
+    { value: 'upbit', label: '업비트' }
 ];
 
 const coinOptions = [
@@ -89,6 +89,20 @@ export default function AddPage() {
                             e.preventDefault();
                             handleSubmit();
                         }} className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    어느 거래소에서 모을까요?
+                                </label>
+                                <Select
+                                    value={formData.exchange}
+                                    onChange={(option: SingleValue<OptionType>) => 
+                                        option && setFormData(prev => ({ ...prev, exchange: option }))}
+                                    options={exchangeOptions}
+                                    styles={selectStyles}
+                                    isSearchable={false}
+                                />
+                            </div>
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">
                                     어떤 코인을 모을까요?

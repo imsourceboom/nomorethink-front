@@ -20,7 +20,6 @@ interface TelegramWebApp {
         show: () => void;
         onClick: (callback: () => void) => void;
     };
-    platform?: string;
     requestFullscreen?: () => void;
     disableVerticalSwipes?: () => void;
     enableClosingConfirmation?: () => void;
