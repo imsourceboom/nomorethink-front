@@ -11,7 +11,7 @@ interface TelegramWrapperProps {
     children: React.ReactNode;
 }
 
-// 텔레그램 WebApp 타입 정의
+/* 텔레그램 WebApp 타입 정의 (참고용)
 interface TelegramWebApp {
     ready: () => void;
     expand: () => void;
@@ -25,15 +25,7 @@ interface TelegramWebApp {
     disableVerticalSwipes?: () => void;
     enableClosingConfirmation?: () => void;
 }
-
-// Window 인터페이스 확장
-declare global {
-    interface Window {
-        Telegram?: {
-            WebApp?: TelegramWebApp;
-        };
-    }
-}
+*/
 
 /**
  * 텔레그램 미니앱 래퍼 컴포넌트
@@ -63,23 +55,28 @@ export default function TelegramWrapper({
         initTelegram();
         
         // 텔레그램 환경인 경우 메인 버튼 숨기기
-        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-            const tg = window.Telegram.WebApp;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const tg = (window as any).Telegram.WebApp;
             
             // 모든 페이지에서 버튼 숨기기
             tg.MainButton.hide();
         }
         
         return () => {
-            if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-                window.Telegram.WebApp.MainButton.hide();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (window as any).Telegram.WebApp.MainButton.hide();
             }
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // 컴포넌트 마운트 시 한 번만 실행
 
     // 텔레그램 웹앱 환경 확인
-    const isTelegramWebApp = typeof window !== 'undefined' && !!window.Telegram?.WebApp;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const isTelegramWebApp = typeof window !== 'undefined' && !!(window as any).Telegram?.WebApp;
     
     // 모바일에서는 15vh, 데스크톱에서는 7vh 패딩 적용
     const paddingTopValue = isMobile ? '15vh' : '7vh';
