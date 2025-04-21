@@ -121,7 +121,7 @@ export default function AddPage() {
                 value={value}
                 onClick={onClick}
                 readOnly
-                className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
+                className="w-full px-4 py-2 text-center bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
             />
         )
     );
