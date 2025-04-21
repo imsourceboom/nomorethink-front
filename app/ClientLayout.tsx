@@ -46,7 +46,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
     // 의도적 딜레이 시뮬레이션: 2초 후 데이터 준비 완료
     useEffect(() => {
-        const timer = setTimeout(() => setDataReady(true), 2000);
+        const timer = setTimeout(() => setDataReady(true), 5000);
         return () => clearTimeout(timer);
     }, []);
 
