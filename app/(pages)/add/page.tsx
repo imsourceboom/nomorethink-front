@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import Select, { StylesConfig, SingleValue } from 'react-select';
 import DatePicker from 'react-datepicker';
 import { registerLocale } from 'react-datepicker';
@@ -112,6 +112,19 @@ export default function AddPage() {
             borderRadius: '12px'
         })
     };
+
+    // 커스텀 입력 컴포넌트 (읽기 전용) - 클릭으로만 열림
+    const TimeInput = forwardRef<HTMLInputElement, { value?: string; onClick?: () => void }>(
+        ({ value, onClick }, ref) => (
+            <input
+                ref={ref}
+                value={value}
+                onClick={onClick}
+                readOnly
+                className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
+            />
+        )
+    );
 
     return (
         <ErrorBoundary>
@@ -244,12 +257,11 @@ export default function AddPage() {
                                         onChange={(date) => setFormData(prev => ({ ...prev, time: date! }))}
                                         showTimeSelect
                                         showTimeSelectOnly
-                                        onKeyDown={(e) => e.preventDefault()}
                                         timeIntervals={15}
                                         timeCaption="시간"
                                         dateFormat="HH:mm"
                                         locale="ko"
-                                        className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
+                                        customInput={<TimeInput />}
                                     />
                                 </div>
                             </div>
