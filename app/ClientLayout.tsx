@@ -11,6 +11,8 @@ import { useTelegram } from './hooks/useTelegram';
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const { initTelegram } = useTelegram();
     const [mounted, setMounted] = useState(false);
+    // 의도적인 로딩 테스트를 위한 데이터 준비 상태
+    const [dataReady, setDataReady] = useState(false);
     
     useEffect(() => {
         // 마운트 상태 업데이트
@@ -42,10 +44,16 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         };
     }, [initTelegram]);
 
+    // 의도적 딜레이 시뮬레이션: 2초 후 데이터 준비 완료
+    useEffect(() => {
+        const timer = setTimeout(() => setDataReady(true), 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
     // 로딩과 메인 UI에 페이드 애니메이션 적용
     return (
         <AnimatePresence mode="wait">
-            {!mounted ? (
+            {(!mounted || !dataReady) ? (
                 <motion.div
                     key="loading"
                     initial={{ opacity: 1 }}
