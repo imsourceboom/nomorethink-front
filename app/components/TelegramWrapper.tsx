@@ -73,18 +73,37 @@ export default function TelegramWrapper({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // 컴포넌트 마운트 시 한 번만 실행
 
-    // 텔레그램 웹앱 환경 확인
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const isTelegramWebApp = typeof window !== 'undefined' && !!(window as any).Telegram?.WebApp;
-    
     // 모바일에서는 15vh, 데스크톱에서는 7vh 패딩 적용
     const paddingTopValue = isMobile ? '15vh' : '7vh';
 
+    // 웹앱 준비 상태 관리
+    const [isWebAppReady, setIsWebAppReady] = useState(false);
+    useEffect(() => {
+        // Telegram WebApp이 준비될 때까지 폴링
+        const checkWebApp = () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const tg = (window as any).Telegram?.WebApp;
+            if (tg) {
+                initTelegram();
+                tg.MainButton.hide();
+                setIsWebAppReady(true);
+                return true;
+            }
+            return false;
+        };
+        if (!checkWebApp()) {
+            const intervalId = setInterval(() => {
+                if (checkWebApp()) clearInterval(intervalId);
+            }, 200);
+            return () => clearInterval(intervalId);
+        }
+    }, [initTelegram]);
+
     return (
-        <div 
+        <div
             className="min-h-screen bg-[var(--bg-color)] text-white"
-            style={{ 
-                paddingTop: isTelegramWebApp ? paddingTopValue : '0'
+            style={{
+                paddingTop: isWebAppReady ? paddingTopValue : '0'
             }}
         >
             {/* 스크롤 가능한 콘텐츠 영역 */}

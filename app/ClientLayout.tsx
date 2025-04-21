@@ -41,9 +41,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         };
     }, [initTelegram]);
 
-    // 첫 번째 서버 렌더링에서는 최소한의 컨테이너만 반환
+    // 클라이언트 마운트 전에는 Loading 스피너만 표시
     if (!mounted) {
-        return <div className="min-h-screen bg-[#202124]">{children}</div>;
+        return <Loading />;
     }
 
     // 클라이언트 렌더링에서는 전체 UI 반환
