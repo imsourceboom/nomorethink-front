@@ -125,6 +125,7 @@ export default function AddPage() {
             />
         )
     );
+    TimeInput.displayName = 'TimeInput';
 
     return (
         <ErrorBoundary>
