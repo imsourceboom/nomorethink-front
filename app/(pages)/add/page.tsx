@@ -8,6 +8,7 @@ import { ko } from 'date-fns/locale';
 import "react-datepicker/dist/react-datepicker.css";
 import TelegramWrapper from '@/app/components/TelegramWrapper';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
+import { getDaysInMonth } from 'date-fns';
 
 registerLocale('ko', ko);
 
@@ -40,11 +41,27 @@ interface OptionType {
 }
 
 export default function AddPage() {
+    // 시간 선택 기본값을 다음 15분 단위로 설정하는 헬퍼
+    const getNearestQuarter = () => {
+        const now = new Date();
+        const minutes = now.getMinutes();
+        const nextQuarter = Math.ceil(minutes / 15) * 15;
+        if (nextQuarter === 60) {
+            now.setHours(now.getHours() + 1);
+            now.setMinutes(0);
+        } else {
+            now.setMinutes(nextQuarter);
+        }
+        now.setSeconds(0);
+        now.setMilliseconds(0);
+        return now;
+    };
+
     const [formData, setFormData] = useState({
         exchange: exchangeOptions[0],
         coin: coinOptions[0],
         price: '',
-        time: new Date(),
+        time: getNearestQuarter(),
         frequency: 'daily' as 'daily' | 'weekly' | 'monthly',
         dayOfWeek: null as OptionType | null,
         dayOfMonth: ''
@@ -179,27 +196,35 @@ export default function AddPage() {
                                 {formData.frequency === 'weekly' && (
                                     <div className="mb-4">
                                         <label className="block text-sm font-medium text-gray-300 mb-2">요일 선택</label>
-                                        <Select
-                                            value={formData.dayOfWeek}
-                                            onChange={(opt) => opt && setFormData(prev => ({ ...prev, dayOfWeek: opt }))}
-                                            options={weeklyOptions}
-                                            styles={selectStyles}
-                                            isSearchable={false}
-                                        />
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {weeklyOptions.map(opt => (
+                                                <button
+                                                    type="button"
+                                                    key={opt.value}
+                                                    className={`px-4 py-2 rounded-xl text-white transition-colors ${formData.dayOfWeek?.value === opt.value ? 'bg-[var(--accent-color)]' : 'bg-[var(--secondary-bg-color)]'}`}
+                                                    onClick={() => setFormData(prev => ({ ...prev, dayOfWeek: opt }))}
+                                                >
+                                                    {opt.label}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                                 {formData.frequency === 'monthly' && (
                                     <div className="mb-4">
                                         <label className="block text-sm font-medium text-gray-300 mb-2">일자 선택</label>
-                                        <input
-                                            type="number"
-                                            min={1}
-                                            max={31}
-                                            value={formData.dayOfMonth}
-                                            onChange={(e) => setFormData(prev => ({ ...prev, dayOfMonth: e.target.value }))}
-                                            placeholder="1~31"
-                                            className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--accent-color)]"
-                                        />
+                                        <div className="grid grid-cols-7 gap-2">
+                                            {Array.from({ length: getDaysInMonth(formData.time) }, (_, i) => i + 1).map(day => (
+                                                <button
+                                                    type="button"
+                                                    key={day}
+                                                    className={`px-2 py-1 rounded-xl text-white transition-colors ${formData.dayOfMonth === day.toString() ? 'bg-[var(--accent-color)]' : 'bg-[var(--secondary-bg-color)]'}`}
+                                                    onClick={() => setFormData(prev => ({ ...prev, dayOfMonth: day.toString() }))}
+                                                >
+                                                    {day}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                                 <DatePicker
