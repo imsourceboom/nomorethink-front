@@ -157,7 +157,7 @@ export default function AddPage() {
                                         value={formData.price}
                                         onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
                                         placeholder="금액을 입력해 주세요"
-                                        className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--accent-color)]"
+                                        className="appearance-none w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--accent-color)]"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
                                         KRW
@@ -227,17 +227,20 @@ export default function AddPage() {
                                         </div>
                                     </div>
                                 )}
-                                <DatePicker
-                                    selected={formData.time}
-                                    onChange={(date) => setFormData(prev => ({ ...prev, time: date! }))}
-                                    showTimeSelect
-                                    showTimeSelectOnly
-                                    timeIntervals={15}
-                                    timeCaption="시간"
-                                    dateFormat="HH:mm"
-                                    locale="ko"
-                                    className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
-                                />
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">시간 선택</label>
+                                    <DatePicker
+                                        selected={formData.time}
+                                        onChange={(date) => setFormData(prev => ({ ...prev, time: date! }))}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={15}
+                                        timeCaption="시간"
+                                        dateFormat="HH:mm"
+                                        locale="ko"
+                                        className="w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
+                                    />
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -245,4 +248,6 @@ export default function AddPage() {
             </TelegramWrapper>
         </ErrorBoundary>
     );
-} 
+}
+
+<style jsx global>{` input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; } `}</style> 
