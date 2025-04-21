@@ -157,9 +157,15 @@ export default function AddPage() {
                                 </label>
                                 <div className="relative">
                                     <input
-                                        type="number"
+                                        type="text"
+                                        inputMode="numeric"
+                                        pattern="[0-9]*"
                                         value={formData.price}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
+                                        onChange={(e) => {
+                                            const raw = e.target.value.replace(/[^0-9]/g, '');
+                                            const formatted = raw ? Number(raw).toLocaleString() : '';
+                                            setFormData(prev => ({ ...prev, price: formatted }));
+                                        }}
                                         placeholder="금액을 입력해 주세요"
                                         className="appearance-none w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--accent-color)]"
                                     />
@@ -236,9 +242,9 @@ export default function AddPage() {
                                     <DatePicker
                                         selected={formData.time}
                                         onChange={(date) => setFormData(prev => ({ ...prev, time: date! }))}
-                                        readOnly
                                         showTimeSelect
                                         showTimeSelectOnly
+                                        onKeyDown={(e) => e.preventDefault()}
                                         timeIntervals={15}
                                         timeCaption="시간"
                                         dateFormat="HH:mm"
