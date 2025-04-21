@@ -44,7 +44,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         };
     }, [initTelegram]);
 
-    // 의도적 딜레이 시뮬레이션: 2초 후 데이터 준비 완료
+    // 의도적 딜레이 시뮬레이션: 3초 후 데이터 준비 완료
     useEffect(() => {
         const timer = setTimeout(() => setDataReady(true), 3000);
         return () => clearTimeout(timer);
