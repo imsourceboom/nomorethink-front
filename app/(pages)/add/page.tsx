@@ -101,6 +101,10 @@ export default function AddPage() {
             ...base,
             color: 'var(--text-color)'
         }),
+        input: (base) => ({
+            ...base,
+            color: 'var(--text-color)'
+        }),
         menu: (base) => ({
             ...base,
             backgroundColor: 'var(--secondary-bg-color)',
@@ -232,6 +236,7 @@ export default function AddPage() {
                                     <DatePicker
                                         selected={formData.time}
                                         onChange={(date) => setFormData(prev => ({ ...prev, time: date! }))}
+                                        readOnly
                                         showTimeSelect
                                         showTimeSelectOnly
                                         timeIntervals={15}
