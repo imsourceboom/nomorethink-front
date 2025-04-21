@@ -4,19 +4,14 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 export default function Loading() {
-    const [isVisible, setIsVisible] = useState(true);
     const text = "No More Think";
-    
+    // 반복 애니메이션을 위해 key 갱신
+    const [loopKey, setLoopKey] = useState(0);
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(false);
-        }, 3000);
-
-        return () => {
-            clearTimeout(timer);
-        };
+        const interval = setInterval(() => setLoopKey(prev => prev + 1), 2000);
+        return () => clearInterval(interval);
     }, []);
-
+    
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -47,8 +42,6 @@ export default function Loading() {
         }
     };
 
-    if (!isVisible) return null;
-
     return (
         <motion.div
             className="fixed inset-0 flex items-center justify-center bg-[#202124] z-[9999]"
@@ -56,19 +49,14 @@ export default function Loading() {
             animate="show"
             exit="exit"
             variants={container}
+            key={loopKey}
         >
             <div className="flex absolute-center">
                 {text.split('').map((char, index) => (
                     <motion.span
                         key={index}
                         variants={item}
-                        className={`text-4xl font-bold ${char === ' ' ? 'mx-2' : ''} ${
-                            index < 2 ? 'text-[#FEF58D]' : // No
-                            index === 2 ? 'mr-2 text-[#FEF58D]' : // space after No
-                            index < 7 ? 'text-[#FEF58D]' : // More
-                            index === 7 ? 'mr-2 text-[#FEF58D]' : // space after More
-                            'text-[#FEF58D]' // Think
-                        }`}
+                        className={`text-4xl font-bold ${char === ' ' ? 'mx-2' : ''} text-[#FEF58D]`}
                     >
                         {char}
                     </motion.span>
