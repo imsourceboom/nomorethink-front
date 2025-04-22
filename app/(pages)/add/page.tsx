@@ -121,7 +121,7 @@ export default function AddPage() {
                 value={value}
                 onClick={onClick}
                 readOnly
-                className="inline-block h-10 px-4 leading-[2.5rem] text-center bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
+                className="inline-block w-auto h-10 px-4 leading-[2.5rem] text-center bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-white focus:outline-none focus:border-[var(--accent-color)]"
             />
         )
     );
