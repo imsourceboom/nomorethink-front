@@ -49,7 +49,7 @@ export default function FloatingMenu() {
 
                 {/* 자동매수 버튼 */}
                 <button
-                    onClick={() => handleNavigation('/add')}
+                    onClick={() => handleNavigation('/dca')}
                     className="absolute w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
                     style={{ 
                         transform: isOpen ? `translate(${calculatePosition(1, 4).x}px, ${calculatePosition(1, 4).y}px)` : 'translate(0, 0)',
