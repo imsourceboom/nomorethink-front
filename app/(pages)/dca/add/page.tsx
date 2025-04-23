@@ -130,8 +130,8 @@ export default function AddPage() {
     return (
         <ErrorBoundary>
             <TelegramWrapper>
-                <main className="flex flex-col items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
-                    <div className="w-full max-w-md mx-auto">
+                <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
+                    <div className="w-full ">
                         <h1 className="text-2xl font-bold mb-8 mt-4">코인 모으기</h1>
 
                         <form onSubmit={(e) => {

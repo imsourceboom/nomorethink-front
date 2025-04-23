@@ -34,14 +34,14 @@ export default function DcaPage() {
   return (
     <ErrorBoundary>
       <TelegramWrapper>
-        <main className="flex flex-col items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
-          <div className="w-full max-w-md mx-auto">
+        <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
+          <div className="w-full ">
             {/* Header with add button */}
-            <div className="flex items-center justify-between mt-4 mb-6">
-              <h1 className="text-2xl font-bold text-white">코인 모으기 현황</h1>
+            <div className="flex items-center justify-between mt-4 mb-10">
+              <h1 className="text-2xl font-bold text-white">나의 모으기 현황</h1>
               <Link href="/dca/add">
-                <button type="button" className="w-10 h-10 rounded-full bg-[var(--accent-color)] flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button type="button" className="w-10 h-10 rounded-full border-2 border-gray-500 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </button>
@@ -49,13 +49,13 @@ export default function DcaPage() {
             </div>
             {/* DCA 신청 현황 리스트 */}
             {dcaData.map(section => (
-              <div key={section.title} className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-300 mb-4">{section.title}</h2>
+              <div key={section.title} className="pt-4 mb-10">
+                <h2 className="text-lg font-semibold text-gray-500 mb-4">{section.title}</h2>
                 {section.items.map((item, idx) => (
                   <Link href={`/dca/add`} key={idx}>
-                    <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-2xl mb-4 cursor-pointer">
+                    <div className="flex items-center justify-between py-4 rounded-2xl mb-4 cursor-pointer">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-[var(--accent-color)] flex items-center justify-center text-white font-bold mr-4">
+                        <div className="w-11 h-11 rounded-full bg-[var(--accent-color)] flex items-center justify-center text-white font-bold mr-4">
                           {item.name.match(/\(([^)]+)\)/)?.[1] ?? item.name[0]}
                         </div>
                         <div>
