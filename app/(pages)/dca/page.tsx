@@ -31,6 +31,9 @@ export default function DcaPage() {
     }
   ];
 
+  // 랜덤 배경색을 위한 색상 배열
+  const colors = ['#F87171', '#60A5FA', '#34D399', '#FBBF24', '#A78BFA', '#F472B6'];
+
   return (
     <ErrorBoundary>
       <TelegramWrapper>
@@ -55,7 +58,10 @@ export default function DcaPage() {
                   <Link href={`/dca/add`} key={idx}>
                     <div className="flex items-center justify-between py-4 rounded-2xl mb-4 cursor-pointer">
                       <div className="flex items-center">
-                        <div className="w-11 h-11 rounded-full bg-[var(--accent-color)] flex items-center justify-center text-white font-bold mr-4">
+                        <div
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold mr-4"
+                          style={{ backgroundColor: colors[Math.floor(Math.random() * colors.length)] }}
+                        >
                           {item.name.match(/\(([^)]+)\)/)?.[1] ?? item.name[0]}
                         </div>
                         <div>
