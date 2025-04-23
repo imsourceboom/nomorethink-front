@@ -53,13 +53,13 @@ export default function DcaPage() {
             {/* DCA 신청 현황 리스트 */}
             {dcaData.map(section => (
               <div key={section.title} className="pt-4 mb-10">
-                <h2 className="text-lg font-semibold text-gray-500 mb-4">{section.title}</h2>
+                <h2 className="text-base font-semibold text-gray-500 mb-4">{section.title}</h2>
                 {section.items.map((item, idx) => (
                   <Link href={`/dca/add`} key={idx}>
                     <div className="flex items-center justify-between py-4 rounded-2xl mb-4 cursor-pointer">
                       <div className="flex items-center">
                         <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold mr-4"
+                          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4"
                           style={{ backgroundColor: colors[Math.floor(Math.random() * colors.length)] }}
                         >
                           {item.name.match(/\(([^)]+)\)/)?.[1] ?? item.name[0]}
