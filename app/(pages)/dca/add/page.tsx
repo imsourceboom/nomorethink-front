@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import TelegramWrapper from '@/app/components/TelegramWrapper';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 import { getDaysInMonth } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 registerLocale('ko', ko);
 
@@ -41,6 +42,7 @@ interface OptionType {
 }
 
 export default function AddPage() {
+    const router = useRouter();
     // 시간 선택 기본값을 다음 15분 단위로 설정하는 헬퍼
     const getNearestQuarter = () => {
         const now = new Date();
@@ -127,12 +129,29 @@ export default function AddPage() {
     );
     TimeInput.displayName = 'TimeInput';
 
+    const isFormValid = formData.price !== '' && (
+        formData.frequency === 'daily' ||
+        (formData.frequency === 'weekly' && formData.dayOfWeek !== null) ||
+        (formData.frequency === 'monthly' && formData.dayOfMonth !== '')
+    );
+
     return (
         <ErrorBoundary>
             <TelegramWrapper>
                 <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
-                    <div className="w-full ">
-                        <h1 className="text-2xl font-bold mb-8 mt-4">코인 모으기</h1>
+                    <div className="w-full">
+                        <div className="flex items-center justify-between mt-4 mb-8">
+                            <h1 className="text-2xl font-bold">코인 모으기</h1>
+                            <button
+                                type="button"
+                                onClick={() => router.push('/dca')}
+                                className="bg-[var(--secondary-bg-color)] hover:bg-[var(--accent-color)] p-2 rounded-full"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
 
                         <form onSubmit={(e) => {
                             e.preventDefault();
@@ -266,6 +285,13 @@ export default function AddPage() {
                                     />
                                 </div>
                             </div>
+                            <button
+                                type="submit"
+                                disabled={!isFormValid}
+                                className={`w-full py-3 rounded-xl text-white transition-colors ${isFormValid ? 'bg-[rgba(59,142,165,0.5)]' : 'bg-[var(--secondary-bg-color)]'}`}
+                            >
+                                모으기
+                            </button>
                         </form>
                     </div>
                 </main>
