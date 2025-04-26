@@ -165,20 +165,21 @@ export default function AddPage() {
                 <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
                     <div className="w-full">
                         <div className="flex items-center justify-between mt-4 mb-8">
-                            <div className="flex items-center space-x-1">
-                                <select
-                                    value={assetType.value}
-                                    onChange={(e) => {
-                                        const selected = assetTypeOptions.find(opt => opt.value === e.target.value);
-                                        if (selected) setAssetType(selected);
+                            <div className="flex items-center space-x-2">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const other = assetTypeOptions.find(opt => opt.value !== assetType.value);
+                                        if (other) setAssetType(other);
                                     }}
-                                    className="bg-transparent border-none text-2xl font-bold text-white focus:outline-none"
+                                    className="flex items-center text-2xl font-bold text-white border-b-2 border-white pb-1"
                                 >
-                                    {assetTypeOptions.map(opt => (
-                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
-                                    ))}
-                                </select>
-                                <span className="text-2xl font-bold text-white"> 모으기</span>
+                                    {assetType.label}
+                                    <svg className="w-5 h-5 ml-1 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <span className="text-2xl font-bold text-white">모으기</span>
                             </div>
                             <button
                                 type="button"
