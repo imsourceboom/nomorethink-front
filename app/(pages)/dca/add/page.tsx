@@ -138,6 +138,10 @@ export default function AddPage() {
         (formData.frequency === 'monthly' && formData.dayOfMonth !== '')
     );
 
+    // 가격 형변환 및 유효성 검사: 5,000원 이하일 때 경고 표시
+    const numericPrice = Number(formData.price.replace(/[^0-9]/g, ''));
+    const isPriceTooLow = formData.price !== '' && numericPrice < 5000;
+
     return (
         <ErrorBoundary>
             <TelegramWrapper>
@@ -204,13 +208,16 @@ export default function AddPage() {
                                             const formatted = raw ? Number(raw).toLocaleString() : '';
                                             setFormData(prev => ({ ...prev, price: formatted }));
                                         }}
-                                        placeholder="금액을 입력해 주세요"
+                                        placeholder="최소 5,000원부터 모을 수 있어요"
                                         className="appearance-none w-full px-4 py-3 bg-[var(--secondary-bg-color)] border border-[var(--input-border-color)] rounded-xl text-right pr-16 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--accent-color)]"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
                                         KRW
                                     </span>
                                 </div>
+                                {isPriceTooLow && (
+                                    <p className="mt-1 text-xs text-red-500">최소 5,000원 이상이어야 해요</p>
+                                )}
                             </div>
 
                             <div>
