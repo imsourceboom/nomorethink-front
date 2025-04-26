@@ -25,6 +25,20 @@ const coinOptions = [
     { value: 'SOL', label: '솔라나' }
 ];
 
+// 주식 옵션 배열 추가
+const stockOptions: OptionType[] = [
+    { value: 'AAPL', label: '애플 (AAPL)' },
+    { value: 'GOOGL', label: '구글 (GOOGL)' },
+    { value: 'TSLA', label: '테슬라 (TSLA)' },
+    { value: 'AMZN', label: '아마존 (AMZN)' }
+];
+
+// 자산 유형 옵션 추가
+const assetTypeOptions: OptionType[] = [
+    { value: 'coin', label: '코인' },
+    { value: 'stock', label: '주식' }
+];
+
 // 주간 옵션 (요일)
 const weeklyOptions: OptionType[] = [
     { value: 'SUN', label: '일요일' },
@@ -45,6 +59,9 @@ export default function AddPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const isEditMode = searchParams.get('edit') === 'true';
+
+    // 자산 유형(코인/주식) 상태
+    const [assetType, setAssetType] = useState<OptionType>(assetTypeOptions[0]);
 
     // 시간 선택 기본값을 다음 15분 단위로 설정하는 헬퍼
     const getNearestQuarter = () => {
@@ -148,7 +165,21 @@ export default function AddPage() {
                 <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
                     <div className="w-full">
                         <div className="flex items-center justify-between mt-4 mb-8">
-                            <h1 className="text-2xl font-bold">코인 모으기</h1>
+                            <div className="flex items-center space-x-1">
+                                <select
+                                    value={assetType.value}
+                                    onChange={(e) => {
+                                        const selected = assetTypeOptions.find(opt => opt.value === e.target.value);
+                                        if (selected) setAssetType(selected);
+                                    }}
+                                    className="bg-transparent border-none text-2xl font-bold text-white focus:outline-none"
+                                >
+                                    {assetTypeOptions.map(opt => (
+                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                    ))}
+                                </select>
+                                <span className="text-2xl font-bold text-white"> 모으기</span>
+                            </div>
                             <button
                                 type="button"
                                 onClick={() => router.push('/dca')}
@@ -164,6 +195,8 @@ export default function AddPage() {
                             e.preventDefault();
                             handleSubmit();
                         }} className="space-y-6">
+                            {/* 거래소 선택: 코인일 때만 노출 */}
+                            {assetType.value === 'coin' && (
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">
                                     어느 거래소에서 모을까요?
@@ -178,18 +211,20 @@ export default function AddPage() {
                                     isSearchable={false}
                                 />
                             </div>
+                            )}
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                                    어떤 코인을 모을까요?
+                                    {assetType.value === 'coin' ? '어떤 코인을 모을까요?' : '어떤 주식을 모을까요?'}
                                 </label>
                                 <Select
                                     value={formData.coin}
                                     onChange={(option: SingleValue<OptionType>) => 
                                         option && setFormData(prev => ({ ...prev, coin: option }))}
-                                    isDisabled={isEditMode}
-                                    options={coinOptions}
+                                    options={assetType.value === 'coin' ? coinOptions : stockOptions}
                                     styles={selectStyles}
+                                    isDisabled={isEditMode}
+                                    isSearchable={false}
                                 />
                             </div>
 
@@ -282,6 +317,8 @@ export default function AddPage() {
                                         </div>
                                     </div>
                                 )}
+                                {/* 시간 선택: 코인일 때만 노출 */}
+                                {assetType.value === 'coin' && (
                                 <div className="mb-4">
                                     <label className="block text-sm font-medium text-gray-300 mb-2">시간 선택</label>
                                     <DatePicker
@@ -296,6 +333,7 @@ export default function AddPage() {
                                         customInput={<TimeInput />}
                                     />
                                 </div>
+                                )}
                             </div>
                             <button
                                 type="submit"
