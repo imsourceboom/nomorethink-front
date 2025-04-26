@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import TelegramWrapper from '@/app/components/TelegramWrapper';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
-import { dcaData, colors } from '../../data';
+import { dcaData } from '../../data';
 
 interface DetailPageProps {
   params: {
@@ -87,13 +87,12 @@ export default function DetailPage({ params }: DetailPageProps) {
     // ... 더 많은 항목 추가 가능
   ];
   const [visibleCount, setVisibleCount] = useState(10);
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     setVisibleCount(prev => Math.min(prev + 10, purchasesHistory.length));
-  };
+  }, [purchasesHistory.length]);
 
   // IntersectionObserver로 infinite scroll 구현
   const loaderRef = useRef<HTMLDivElement | null>(null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const node = loaderRef.current;
     const observer = new IntersectionObserver(
@@ -104,7 +103,7 @@ export default function DetailPage({ params }: DetailPageProps) {
     );
     if (node) observer.observe(node);
     return () => { if (node) observer.unobserve(node); };
-  }, []);
+  }, [loadMore]);
 
   return (
     <ErrorBoundary>
