@@ -16,19 +16,15 @@ export default function DetailPage({ params }: DetailPageProps) {
   const [isPaused, setIsPaused] = useState(false);
   // 전역 인덱스에 해당하는 섹션 및 항목 찾기
   let offset = 0;
-  let sectionTitle = '';
   let itemName = '';
   let itemDetails = '';
-  let badgeColor = '';
   let startDate = '';
 
   for (const section of dcaData) {
     if (globalIdx < offset + section.items.length) {
-      sectionTitle = section.title;
       const localIdx = globalIdx - offset;
       itemName = section.items[localIdx].name;
       itemDetails = section.items[localIdx].details;
-      badgeColor = colors[globalIdx % colors.length];
       startDate = section.items[localIdx].startDate || '';
       break;
     }
@@ -36,10 +32,23 @@ export default function DetailPage({ params }: DetailPageProps) {
   }
 
   const segments = itemDetails.split('•').map(s => s.trim());
-  const amount = segments[0];
+  // 금액: 숫자만 DB에서 가져온다고 가정하고 파싱 및 포맷팅
+  const amountRaw = segments[0];
+  const amountValue = Number(amountRaw.replace(/[^0-9]/g, ''));
   const frequency = segments[1] || '';
-  const dayPart = segments[2] || '';
-  const frequencyDisplay = dayPart ? `${frequency} - ${dayPart}` : frequency;
+  // 주기 표시: 일별, 주별, 월별에 따라 필요한 부분만 조합
+  let frequencyDisplay = frequency;
+  if (frequency === '매일') {
+    const time = segments[2] || '';
+    if (time) frequencyDisplay = `${frequency} - ${time}`;
+  } else {
+    const dayPart = segments[2] || '';
+    const timePart = segments[3] || '';
+    const parts = [frequency];
+    if (dayPart) parts.push(dayPart);
+    if (timePart) parts.push(timePart);
+    frequencyDisplay = parts.join(' - ');
+  }
   // 기간 표시: 시작 날짜를 적용하여 보여줍니다
   const periodDisplay = startDate ? `${startDate} ~ 계속 유지` : frequency;
   
@@ -84,20 +93,18 @@ export default function DetailPage({ params }: DetailPageProps) {
 
   // IntersectionObserver로 infinite scroll 구현
   const loaderRef = useRef<HTMLDivElement | null>(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    const node = loaderRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMore();
-        }
+        if (entries[0].isIntersecting) loadMore();
       },
       { root: null, rootMargin: '0px', threshold: 1.0 }
     );
-    if (loaderRef.current) observer.observe(loaderRef.current);
-    return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
-    };
-  }, [visibleCount]);
+    if (node) observer.observe(node);
+    return () => { if (node) observer.unobserve(node); };
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -112,7 +119,7 @@ export default function DetailPage({ params }: DetailPageProps) {
                 </svg>
               </button>
             </Link>
-            <h1 className="text-2xl font-bold text-white">{itemName} 모으기 상세</h1>
+            <h1 className="text-2xl font-bold text-white">{`${itemName}를 ${frequencyDisplay}`}</h1>
             <div className="w-6" />
           </div>
 
@@ -120,7 +127,7 @@ export default function DetailPage({ params }: DetailPageProps) {
           <div className="w-full bg-[var(--secondary-bg-color)] rounded-2xl py-6 px-4 mb-6 flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-400">{itemName}를 {periodDisplay}</p>
-              <p className="text-4xl font-semibold text-white mt-1">{amount}</p>
+              <p className="text-4xl font-semibold text-white mt-1">{amountValue.toLocaleString()}원</p>
             </div>
             <span className={`px-3 py-1 rounded-full text-xs font-medium ${isPaused ? 'bg-[rgba(244,158,76,0.5)]' : 'bg-[rgba(59,142,165,0.5)]'}`}>
               {isPaused ? '일시정지' : '모으는 중'}
@@ -132,7 +139,7 @@ export default function DetailPage({ params }: DetailPageProps) {
             <div className="flex justify-between items-center">
               <span className="text-gray-400 text-lg">금액</span>
               <div className="flex items-center">
-                <span className="text-white text-lg">{amount}</span>
+                <span className="text-white text-lg">{amountValue.toLocaleString()}원</span>
                 <svg className="w-4 h-4 text-gray-400 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
