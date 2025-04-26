@@ -55,35 +55,35 @@ export default function DetailPage({ params }: DetailPageProps) {
   // 자동 매수 내역 예시 데이터
   const purchasesHistory = [
     { date: '4.25', cycle: 338, status: '주문 대기중' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.24', cycle: 337, amount: '997원', total: '329,398원' },
-    { date: '4.23', cycle: 336, amount: '988원', total: '328,401원' },
-    { date: '4.22', cycle: 335, amount: '990원', total: '327,413원' },
-    { date: '4.21', cycle: 334, amount: '986원', total: '326,423원' },
-    { date: '4.20', cycle: 333, amount: '998원', total: '325,437원' }
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.24', cycle: 337, amount: '997', total: '329,398' },
+    { date: '4.23', cycle: 336, amount: '988', total: '328,401' },
+    { date: '4.22', cycle: 335, amount: '990', total: '327,413' },
+    { date: '4.21', cycle: 334, amount: '986', total: '326,423' },
+    { date: '4.20', cycle: 333, amount: '998', total: '325,437' }
     // ... 더 많은 항목 추가 가능
   ];
   const [visibleCount, setVisibleCount] = useState(10);
@@ -119,15 +119,15 @@ export default function DetailPage({ params }: DetailPageProps) {
                 </svg>
               </button>
             </Link>
-            <h1 className="text-2xl font-bold text-white">{`${itemName}를 ${frequencyDisplay}`}</h1>
+            <h1 className="text-2xl font-bold text-white">{itemName} 모으기 상세</h1>
             <div className="w-6" />
           </div>
 
           {/* 요약 카드 */}
           <div className="w-full bg-[var(--secondary-bg-color)] rounded-2xl py-6 px-4 mb-6 flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-400">{itemName}를 {periodDisplay}</p>
-              <p className="text-4xl font-semibold text-white mt-1">{amountValue.toLocaleString()}원</p>
+              <p className="text-sm text-gray-400">{itemName}를 {frequency}</p>
+              <p className="text-4xl font-semibold text-white mt-1">{amountValue.toLocaleString()} 원</p>
             </div>
             <span className={`px-3 py-1 rounded-full text-xs font-medium ${isPaused ? 'bg-[rgba(244,158,76,0.5)]' : 'bg-[rgba(59,142,165,0.5)]'}`}>
               {isPaused ? '일시정지' : '모으는 중'}
@@ -139,7 +139,7 @@ export default function DetailPage({ params }: DetailPageProps) {
             <div className="flex justify-between items-center">
               <span className="text-gray-400 text-lg">금액</span>
               <div className="flex items-center">
-                <span className="text-white text-lg">{amountValue.toLocaleString()}원</span>
+                <span className="text-white text-lg">{amountValue.toLocaleString()} 원</span>
                 <svg className="w-4 h-4 text-gray-400 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -209,8 +209,8 @@ export default function DetailPage({ params }: DetailPageProps) {
                   </div>
                   <div className="flex flex-col items-end">
                     {entry.status && <span className="text-blue-500 text-lg">{entry.status}</span>}
-                    {entry.amount && <span className="text-blue-500 text-lg">{entry.amount}</span>}
-                    {entry.total && <span className="text-sm text-gray-400 mt-1">{entry.total}</span>}
+                    {entry.amount && <span className="text-blue-500 text-lg">{entry.amount} 원</span>}
+                    {entry.total && <span className="text-sm text-gray-400 mt-1">{entry.total} 원</span>}
                   </div>
                 </div>
               ))}
