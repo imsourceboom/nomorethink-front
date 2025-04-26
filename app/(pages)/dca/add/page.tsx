@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import TelegramWrapper from '@/app/components/TelegramWrapper';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 import { getDaysInMonth } from 'date-fns';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 registerLocale('ko', ko);
 
@@ -43,6 +43,9 @@ interface OptionType {
 
 export default function AddPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const isEditMode = searchParams.get('edit') === 'true';
+
     // 시간 선택 기본값을 다음 15분 단위로 설정하는 헬퍼
     const getNearestQuarter = () => {
         const now = new Date();
@@ -145,7 +148,7 @@ export default function AddPage() {
                             <button
                                 type="button"
                                 onClick={() => router.push('/dca')}
-                                className="bg-[var(--secondary-bg-color)] hover:bg-[var(--accent-color)] p-2 rounded-full"
+                                className="bg-[var(--secondary-bg-color)] p-2 rounded-full"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -165,6 +168,7 @@ export default function AddPage() {
                                     value={formData.exchange}
                                     onChange={(option: SingleValue<OptionType>) => 
                                         option && setFormData(prev => ({ ...prev, exchange: option }))}
+                                    isDisabled={isEditMode}
                                     options={exchangeOptions}
                                     styles={selectStyles}
                                     isSearchable={false}
@@ -179,6 +183,7 @@ export default function AddPage() {
                                     value={formData.coin}
                                     onChange={(option: SingleValue<OptionType>) => 
                                         option && setFormData(prev => ({ ...prev, coin: option }))}
+                                    isDisabled={isEditMode}
                                     options={coinOptions}
                                     styles={selectStyles}
                                 />

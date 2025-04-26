@@ -34,6 +34,15 @@ export default function DcaPage() {
   // 랜덤 배경색을 위한 색상 배열
   const colors = ['#F87171', '#60A5FA', '#34D399', '#FBBF24', '#A78BFA', '#F472B6'];
 
+  // section 및 항목 인덱스 기반의 전역 인덱스 계산 헬퍼
+  const getGlobalIndex = (sectionIndex: number, itemIndex: number) => {
+    let offset = 0;
+    for (let i = 0; i < sectionIndex; i++) {
+      offset += dcaData[i].items.length;
+    }
+    return offset + itemIndex;
+  };
+
   return (
     <ErrorBoundary>
       <TelegramWrapper>
@@ -45,7 +54,7 @@ export default function DcaPage() {
               <Link href="/dca/add">
                 <button
                   type="button"
-                  className="w-10 h-10 rounded-full border-2 flex items-center justify-center border-[rgba(59,142,165,0.5)] group hover:bg-[rgba(59,142,165,0.5)]"
+                  className="w-10 h-10 rounded-full border-2 flex items-center justify-center border-[rgba(59,142,165,0.5)] group hover:bg-[rgba(59,142,165,0.5)] hover:border-[rgba(59,142,165,0)]"
                 >
                   <svg
                     className="w-6 h-6 text-[rgba(59,142,165,0.5)] group-hover:text-white"
@@ -59,11 +68,11 @@ export default function DcaPage() {
               </Link>
             </div>
             {/* DCA 신청 현황 리스트 */}
-            {dcaData.map(section => (
+            {dcaData.map((section, sectionIdx) => (
               <div key={section.title} className="pt-4 mb-10">
                 <h2 className="text-base font-semibold text-gray-500 mb-4">{section.title}</h2>
                 {section.items.map((item, idx) => (
-                  <Link href={`/dca/add`} key={idx}>
+                  <Link href={`/dca/detail/${getGlobalIndex(sectionIdx, idx)}`} key={idx}>
                     <div className="flex items-center justify-between py-4 rounded-2xl mb-4 cursor-pointer">
                       <div className="flex items-center">
                         <div
