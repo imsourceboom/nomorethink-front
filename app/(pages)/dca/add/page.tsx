@@ -216,7 +216,7 @@ export default function AddPage() {
                                     </span>
                                 </div>
                                 {isPriceTooLow && (
-                                    <p className="mt-1 text-xs text-red-500">최소 5,000원 이상이어야 해요</p>
+                                    <p className="mt-1 text-sm text-red-500">최소 5,000원 이상이어야 해요</p>
                                 )}
                             </div>
 
