@@ -170,7 +170,14 @@ export default function AddPage() {
                                     type="button"
                                     onClick={() => {
                                         const other = assetTypeOptions.find(opt => opt.value !== assetType.value);
-                                        if (other) setAssetType(other);
+                                        if (other) {
+                                            setAssetType(other);
+                                            // 자산 유형 변경 시 기본 선택값 초기화
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                coin: other.value === 'coin' ? coinOptions[0] : stockOptions[0]
+                                            }));
+                                        }
                                     }}
                                     className="flex items-center text-2xl font-bold text-white border-b-2 border-white pb-1"
                                 >
