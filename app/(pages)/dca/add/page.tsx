@@ -6,8 +6,7 @@ import DatePicker from 'react-datepicker';
 import { registerLocale } from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import "react-datepicker/dist/react-datepicker.css";
-import TelegramWrapper from '@/app/components/TelegramWrapper';
-import ErrorBoundary from '@/app/components/ErrorBoundary';
+import AppPageLayout from '@/app/components/AppPageLayout';
 import { getDaysInMonth } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -160,9 +159,7 @@ export default function AddPage() {
     const isPriceTooLow = formData.price !== '' && numericPrice < 5000;
 
     return (
-        <ErrorBoundary>
-            <TelegramWrapper>
-                <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
+        <AppPageLayout>
                     <div className="w-full">
                         <div className="flex items-center justify-between mt-4 mb-8">
                             <div className="flex items-center space-x-2">
@@ -352,8 +349,6 @@ export default function AddPage() {
                             </button>
                         </form>
                     </div>
-                </main>
-            </TelegramWrapper>
-        </ErrorBoundary>
+                </AppPageLayout>
     );
 } 

@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import TelegramWrapper from '@/app/components/TelegramWrapper';
-import ErrorBoundary from '@/app/components/ErrorBoundary';
+import AppPageLayout from '@/app/components/AppPageLayout';
 import { dcaData } from '../../data';
 
 interface DetailPageProps {
@@ -106,9 +105,7 @@ export default function DetailPage({ params }: DetailPageProps) {
   }, [loadMore]);
 
   return (
-    <ErrorBoundary>
-      <TelegramWrapper>
-        <main className="flex flex-col mx-auto max-w-md items-center px-4 pb-24 bg-[var(--bg-color)]">
+    <AppPageLayout>
           {/* Header */}
           <div className="flex items-center w-full justify-between mt-4 mb-6">
             <Link href="/dca">
@@ -217,8 +214,6 @@ export default function DetailPage({ params }: DetailPageProps) {
               <div ref={loaderRef} className="h-1" />
             </div>
           </div>
-        </main>
-      </TelegramWrapper>
-    </ErrorBoundary>
+        </AppPageLayout>
   );
 } 

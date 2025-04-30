@@ -2,8 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import TelegramWrapper from '@/app/components/TelegramWrapper';
-import ErrorBoundary from '@/app/components/ErrorBoundary';
+import AppPageLayout from '@/app/components/AppPageLayout';
 
 export default function DcaPage() {
   const dcaData = [
@@ -44,9 +43,7 @@ export default function DcaPage() {
   };
 
   return (
-    <ErrorBoundary>
-      <TelegramWrapper>
-        <main className="flex flex-col mx-auto max-w-md items-center justify-start px-4 pb-24 bg-[var(--bg-color)]">
+    <AppPageLayout>
           <div className="w-full ">
             {/* Header with add button */}
             <div className="flex items-center justify-between mt-4 mb-10">
@@ -95,8 +92,6 @@ export default function DcaPage() {
               </div>
             ))}
           </div>
-        </main>
-      </TelegramWrapper>
-    </ErrorBoundary>
+        </AppPageLayout>
   );
 } 
